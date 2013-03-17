@@ -11,7 +11,8 @@ public class CardImpl implements Card {
 	private String suit;
 	private int rank;
 	
-	public CardImpl(String suit, int rank) {
+	
+	public CardImpl(int rank, String suit) {
 		this.suit = suit;
 		this.rank = rank;
 	}
@@ -19,25 +20,14 @@ public class CardImpl implements Card {
 	
 	@Override
 	public String getSuit() {
-		// TODO Auto-generated method stub
-		return null;
+		return suit;
 	}
 
-	/* (non-Javadoc)
-	 * @see code.Card#getRank()
-	 */
+	
 	@Override
 	public int getRank() {
-		// TODO Auto-generated method stub
-		return 0;
+		return rank;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
