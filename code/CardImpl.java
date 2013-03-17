@@ -3,31 +3,33 @@
  */
 package code;
 
-import java.util.List;
-import java.util.LinkedList;
-
 /**
  * @author Anna Taylor
  *
  */
-public class DeckImpl implements Deck {
-	private List<Card> deck = new LinkedList<>();
+public class CardImpl implements Card {
+	private String suit;
+	private int rank;
 	
+	public CardImpl(String suit, int rank) {
+		this.suit = suit;
+		this.rank = rank;
+	}
 
 	
 	@Override
-	public void shuffleCards() {
+	public String getSuit() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	/* (non-Javadoc)
-	 * @see code.Deck#createCards()
+	 * @see code.Card#getRank()
 	 */
 	@Override
-	public void createCards() {
+	public int getRank() {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 
 	/**
