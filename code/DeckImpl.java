@@ -45,12 +45,22 @@ public class DeckImpl implements Deck {
 			deck.add(c);
 		}
 	}
+	
+	public void printDeck() {
+		for (int i = 0; i < deck.size(); i++) {
+			System.out.println(deck.get(i).toString());
+		}
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Deck testDeck = new DeckImpl();
+		
+		testDeck.printDeck();
+		
+		
 
 	}
 

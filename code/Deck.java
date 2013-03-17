@@ -20,4 +20,9 @@ public interface Deck {
 	 */
 	public void createCards();
 	
+	/**
+	 * Prints the contents of the deck.
+	 */
+	public void printDeck();
+	
 }
