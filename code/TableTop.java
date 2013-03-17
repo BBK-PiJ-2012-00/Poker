@@ -20,5 +20,11 @@ public interface TableTop {
 	 * field.
 	 */
 	public void createDealer();
+	
+	
+	/**
+	 * Creates a Deck object and initialises the Deck field.
+	 */
+	public void createDeck();
 
 }
