@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import code.Suit;
+
 /**
  * @author Anna Taylor
  *
@@ -14,8 +16,10 @@ import org.junit.Test;
 public class SuitTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testToString() {
+		String expected = "Diamonds";
+		String output = Suit.DIAMONDS.toString();
+		assertEquals("Problem with toString() override", expected, output);
 	}
 
 }

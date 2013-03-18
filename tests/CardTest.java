@@ -20,7 +20,7 @@ import code.Rank;
 public class CardTest {
 	
 	@Test
-	public void test() {
+	public void testGetSuit() {
 		Suit expectedSuit = Suit.HEARTS;
 		Card card = new CardImpl(Rank.ACE, expectedSuit);
 		Suit outputSuit = card.getSuit();
@@ -29,49 +29,32 @@ public class CardTest {
 	}
 	
 	@Test
-	public void test2() {
-		int expectedRank = Rank.ACE.getValue();
-		Card card = new CardImpl(expectedRank, "D");
-		int outputRank = card.getRank();
+	public void testGetRank() {
+		Rank expectedRank = Rank.ACE;
+		Card card = new CardImpl(expectedRank, Suit.SPADES);
+		Rank outputRank = card.getRank();
 		
 		assertEquals("Problem with getRank()", expectedRank, outputRank);		
 	}
 	
 	@Test
-	public void test3() {
-		Card card = new CardImpl(1,"D");
+	public void testToString() {
+		Card card = new CardImpl(Rank.TWO, Suit.HEARTS);
 		String output = card.toString();
-		String expected = "[AD]";
+		String expected = "[Two Hearts]";
 		
 		assertEquals("Problem with toString()", expected, output);
 	}
 	
 	@Test
-	public void test4() {
-		Card card = new CardImpl(11,"S");
+	public void testToString2() {
+		Card card = new CardImpl(Rank.JACK, Suit.CLUBS);
 		String output = card.toString();
-		String expected = "[JS]";
+		String expected = "[Jack Clubs]";
 		
 		assertEquals("Problem with toString()", expected, output);
 	}
 	
-	@Test
-	public void test5() {
-		Card card = new CardImpl(12,"H");
-		String output = card.toString();
-		String expected = "[QH]";
-		
-		assertEquals("Problem with toString()", expected, output);
-	}
-	
-	@Test 
-	public void test6() {
-		Card card = new CardImpl(13,"C");
-		String output = card.toString();
-		String expected = "[KC]";
-		
-		assertEquals("Problem with toString()", expected, output);
-	}
 	
 	//Don't forget to test comparing cards to one another once class implements Comparable; overriding
 	//equals() and compareTo().
