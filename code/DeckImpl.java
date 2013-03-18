@@ -28,22 +28,12 @@ public class DeckImpl implements Deck {
 	
 	@Override
 	public void createCards() {		
-		for (int i = 0; i < 13; i++) {
-			Card c = new CardImpl(i + 1, "C");
-			deck.add(c);
-		}
-		for (int j = 0; j < 13; j++) {
-			Card c = new CardImpl(j + 1, "S");
-			deck.add(c);
-		}
-		for (int k = 0; k < 13; k++) {
-			Card c = new CardImpl(k + 1, "H");
-			deck.add(c);
-		}
-		for (int l = 0; l < 13; l++) {
-			Card c = new CardImpl(l + 1, "D");
-			deck.add(c);
-		}
+		for (int i = 0; i < 4; i++) { //Creates four lots of 13 cards, one set of each suit
+			for (int j = 0; j < 13; j++) {
+				Card c = new CardImpl(Rank.values()[j], Suit.values()[i]);//Enum values() is an array of the enum values.
+				deck.add(c);
+			}
+		}		
 	}
 	
 	public void printDeck() {
