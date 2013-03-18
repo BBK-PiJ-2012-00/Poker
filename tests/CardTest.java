@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import code.Card;
 import code.CardImpl;
+import code.Suit;
+import code.Rank;
 
 /**
  * @author Anna Taylor
@@ -19,16 +21,16 @@ public class CardTest {
 	
 	@Test
 	public void test() {
-		String expectedSuit = "D";
-		Card card = new CardImpl(1, expectedSuit);
-		String outputSuit = card.getSuit();
+		Suit expectedSuit = Suit.HEARTS;
+		Card card = new CardImpl(Rank.ACE, expectedSuit);
+		Suit outputSuit = card.getSuit();
 		
 		assertEquals("Problem with getSuit()", expectedSuit, outputSuit);		
 	}
 	
 	@Test
 	public void test2() {
-		int expectedRank = 1;
+		int expectedRank = Rank.ACE.getValue();
 		Card card = new CardImpl(expectedRank, "D");
 		int outputRank = card.getRank();
 		
@@ -71,6 +73,7 @@ public class CardTest {
 		assertEquals("Problem with toString()", expected, output);
 	}
 	
-	//Don't forget to test comparing cards to one another once class implements Comparable
+	//Don't forget to test comparing cards to one another once class implements Comparable; overriding
+	//equals() and compareTo().
 
 }
