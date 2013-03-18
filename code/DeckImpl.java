@@ -11,13 +11,16 @@ import java.util.LinkedList;
  *
  */
 public class DeckImpl implements Deck {
-	private List<Card> deck = new LinkedList<>();
+	private List<Card> deckContents = new LinkedList<>();
 	
 	public DeckImpl() {
 		this.createCards();
 	}
 	
-
+	
+	public List<Card> getContents() {
+		return deckContents;
+	}
 	
 	@Override
 	public void shuffleCards() {
@@ -31,14 +34,14 @@ public class DeckImpl implements Deck {
 		for (int i = 0; i < 4; i++) { //Creates four lots of 13 cards, one set of each suit
 			for (int j = 0; j < 13; j++) {
 				Card c = new CardImpl(Rank.values()[j], Suit.values()[i]);//Enum values() is an array of the enum values.
-				deck.add(c);
+				deckContents.add(c);
 			}
 		}		
 	}
 	
 	public void printDeck() {
-		for (int i = 0; i < deck.size(); i++) {
-			System.out.println(deck.get(i).toString());
+		for (int i = 0; i < deckContents.size(); i++) {
+			System.out.println(deckContents.get(i).toString());
 		}
 	}
 
