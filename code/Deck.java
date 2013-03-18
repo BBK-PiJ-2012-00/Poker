@@ -3,11 +3,19 @@
  */
 package code;
 
+import java.util.List;
+
 /**
  * @author Anna Taylor
  *
  */
 public interface Deck {
+	
+	/**
+	 * Returns contents of the deck.
+	 * @return List<Card>
+	 */
+	public List<Card> getContents();
 
 	/**
 	 * Shuffles the deck.
