@@ -9,9 +9,9 @@ package code;
  */
 public interface Card {
 	
-	public String getSuit();
+	public Suit getSuit();
 	
-	public int getRank();
+	public Rank getRank();
 	
 	
 }

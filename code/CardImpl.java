@@ -8,46 +8,31 @@ package code;
  *
  */
 public class CardImpl implements Card {
-	private String suit;
-	private int rank;
+	private final Suit SUIT;
+	private final Rank RANK;
 	
 	
-	public CardImpl(int rank, String suit) {
-		this.suit = suit;
-		this.rank = rank;
+	public CardImpl(Rank rank, Suit suit) {
+		this.SUIT = suit;
+		this.RANK = rank;
 	}
 
 	
 	@Override
-	public String getSuit() {
-		return suit;
+	public Suit getSuit() {
+		return SUIT;
 	}
 
 	
 	@Override
-	public int getRank() {
-		return rank;
+	public Rank getRank() {
+		return RANK;
 	}
 	
 	@Override
 	public String toString() {
-		String cardDisplay = "[";
-		if (rank == 1) {
-			cardDisplay += "A" + suit + "]";
-		}
-		else if (rank == 11) {
-			cardDisplay += "J" + suit + "]";
-		}
-		else if (rank == 12) {
-			cardDisplay += "Q" + suit + "]";
-		}
-		else if (rank == 13) {
-			cardDisplay += "K" + suit + "]";
-		}
-		else {
-			cardDisplay += rank + suit + "]";
-		}
-		return cardDisplay;
+		return "[" + RANK.toString() + " " + SUIT.toString() + "]";
+		
 	}
 	
 
