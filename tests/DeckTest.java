@@ -5,6 +5,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import code.Deck;
 import code.DeckImpl;
@@ -20,7 +22,7 @@ import code.Suit;
 public class DeckTest {
 
 	@Test
-	public void testCreateCards() {
+	public void testCreateCards() { //Checks that 52 cards are created
 		Deck testDeck = new DeckImpl();
 		int expectedDeckSize = 52;
 		int outputDeckSize = testDeck.getContents().size();
@@ -29,10 +31,18 @@ public class DeckTest {
 	}
 	
 	@Test
+	public void testGetContents() {
+		Deck testDeck = new DeckImpl();
+		List<Card> output = testDeck.getContents();
+		
+		assertNotNull(output);
+	}
+	
+	@Test
 	public void testCardsCreatedClubs()	{ //Tests that all club cards are contained in the deck
 		Deck testDeck = new DeckImpl();
 		String[] clubs = new String[13];
-		for (int i = 0; i < 13; i++) {
+		for (int i = 0; i < 13; i++) { //Creates array of clubs, for comparison with clubs created by the deck
 			Card c = new CardImpl(Rank.values()[i], Suit.CLUBS);
 			clubs[i] = c.toString();
 		}
