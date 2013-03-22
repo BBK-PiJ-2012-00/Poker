@@ -12,13 +12,9 @@ public class FiveCardHand implements Hand {
 	private Card[] handContents = new CardImpl[SIZE];
 	
 	
-	/* (non-Javadoc)
-	 * @see code.Hand#getContents()
-	 */
 	@Override
 	public Card[] getContents() {
-		// TODO Auto-generated method stub
-		return null;
+		return handContents;
 	}
 
 }
