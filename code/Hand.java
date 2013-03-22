@@ -16,5 +16,11 @@ public interface Hand {
 	 */
 	public Card[] getContents();
 	
+	/**
+	 * Allows for the addition of cards to the handContents array.
+	 * 
+	 * @param Card the card to be added to the hand.
+	 */
+	public void addCard(Card c);
 
 }
