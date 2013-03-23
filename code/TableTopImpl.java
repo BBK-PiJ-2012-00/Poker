@@ -13,27 +13,20 @@ public class TableTopImpl implements TableTop {
 	private Deck deck;
 	
 
-	/* (non-Javadoc)
-	 * @see code.TableTop#createPlayer()
-	 */
 	@Override
 	public void createPlayer() {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see code.TableTop#createDealer()
-	 */
+	
 	@Override
 	public void createDealer() {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see code.TableTop#createDeck()
-	 */
+	
 	@Override
 	public void createDeck() {
 		// TODO Auto-generated method stub

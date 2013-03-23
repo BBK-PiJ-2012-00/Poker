@@ -70,8 +70,7 @@ public class FiveCardHand implements Hand {
 	
 	
 	public void sort() {
-		// TODO Auto-generated method stub
-		
+		Arrays.sort(handContents);		
 	}
 
 
@@ -92,8 +91,11 @@ public class FiveCardHand implements Hand {
 
 	@Override
 	public String displayHand() {
-		// TODO Auto-generated method stub
-		return null;
+		String handDisplay = "";
+		for (int i = 0; i < SIZE; i++) {
+			handDisplay += handContents[i].toString() + " ";
+		}
+		return handDisplay;
 	}
 
 }
