@@ -3,6 +3,7 @@
  */
 package code;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -24,8 +25,7 @@ public class DeckImpl implements Deck {
 	
 	@Override
 	public void shuffleCards() {
-		// TODO Auto-generated method stub
-
+		Collections.shuffle(deckContents);
 	}
 
 	
@@ -50,6 +50,10 @@ public class DeckImpl implements Deck {
 	 */
 	public static void main(String[] args) {
 		Deck testDeck = new DeckImpl();
+		
+		//testDeck.printDeck();
+		
+		testDeck.shuffleCards();
 		
 		testDeck.printDeck();
 		
