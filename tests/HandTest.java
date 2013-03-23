@@ -14,6 +14,8 @@ import code.Card;
 import code.CardImpl;
 import code.Deck;
 import code.DeckImpl;
+import code.Rank;
+import code.Suit;
 
 /**
  * @author Anna Taylor
@@ -46,8 +48,27 @@ public class HandTest {
 		assertNull(contents[0]); //handContents should be an empty array upon creation.
 	}
 	
-	//Test addCard()
-	//Test displayHand()
+	@Test
+	public void testAddCard() {
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.values()[0]);
+			testHand.addCard(c);
+			assertEquals(c, testHand.getContents()[i]);//Tests that each card was in fact added to the hand.
+		}		
+	}
+	
+	@Test
+	public void testDisplayHand() {
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.values()[0]);
+			testHand.addCard(c);
+		}
+		String expected = "[Ace Clubs] [Two Clubs] [Three Clubs] [Four Clubs] [Five Clubs] ";
+		String output = testHand.displayHand();
+		assertEquals(expected, output);
+	}
 	
 	@Test
 	public void testSort() {
