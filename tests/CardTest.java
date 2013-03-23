@@ -55,8 +55,32 @@ public class CardTest {
 		assertEquals("Problem with toString()", expected, output);
 	}
 	
+	@Test
+	public void testComparison() {
+		Card kingHearts = new CardImpl(Rank.KING, Suit.HEARTS);
+		Card kingSpades = new CardImpl(Rank.KING, Suit.HEARTS);
+		int expected = 0; //compareTo should return 0 if two cards are of equal rank
+		assertEquals("CompareTo not working correctly", expected, kingHearts.compareTo(kingSpades));
+	}
 	
-	//Don't forget to test comparing cards to one another once class implements Comparable; overriding
-	//equals() and compareTo().
+	@Test
+	public void testComparison2() {
+		Card jackDiamonds = new CardImpl(Rank.JACK, Suit.DIAMONDS);
+		Card tenClubs = new CardImpl(Rank.TEN, Suit.CLUBS);
+		int expected = 1; //compareTo should return 1 if the current card is greater than the second
+		assertEquals("CompareTo not working correctly", expected, jackDiamonds.compareTo(tenClubs));
+	}
+	
+	@Test
+	public void testComparison3() {
+		Card twoSpades = new CardImpl(Rank.TWO, Suit.SPADES);
+		Card nineHearts = new CardImpl(Rank.NINE, Suit.HEARTS);
+		int expected = -7; //compareTo should return 1 if the current card is greater than the second
+		assertEquals("CompareTo not working correctly", expected, twoSpades.compareTo(nineHearts));
+	}
+	
+	
+	
+	
 
 }
