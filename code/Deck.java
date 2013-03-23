@@ -29,6 +29,13 @@ public interface Deck {
 	public void createCards();
 	
 	/**
+	 * Pops a card off the top of the deck, removing it. Used for
+	 * dealing cards to players.
+	 * @return Card the card to be dealt to the player.
+	 */
+	public Card popCard(); 
+	
+	/**
 	 * Prints the contents of the deck.
 	 */
 	public void printDeck();

@@ -10,6 +10,12 @@ package code;
 public interface TableTop {
 	
 	/**
+	 * This method creates a human player and a dealer, setting up
+	 * the Poker table.
+	 */
+	public void prepareTable();
+	
+	/**
 	 * Creates a human player and initialises the Player field.  
 	 */
 	public void createPlayer();
