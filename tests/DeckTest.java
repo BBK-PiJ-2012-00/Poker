@@ -98,5 +98,56 @@ public class DeckTest {
 		}
 	}
 	
+	@Test
+	public void testDeckShuffle() {
+		Deck testDeck = new DeckImpl();
+		testDeck.shuffleCards();
+		String[] firstShuffleResult = new String[52];
+		for (int i = 0; i < 52; i++) {
+			firstShuffleResult[i] = testDeck.getContents().get(i).toString();
+		}
+		String[] secondShuffleResult = new String[52];
+		for (int i = 0; i < 52; i++) {
+			secondShuffleResult[i] = testDeck.getContents().get(i).toString();
+		}
+		
+		for (int i = 0; i < 52; i++) {
+			assertEquals(firstShuffleResult[i], secondShuffleResult[i]);
+		}		
+	}
+	
+	@Test	
+	public void testDeckShuffleIsDifferent() {
+		Deck testDeck = new DeckImpl();
+		testDeck.shuffleCards();//Shuffle the first time and represent state of deck in a String array
+		String[] firstShuffleResult = new String[52];
+		for (int i = 0; i < 52; i++) {
+			firstShuffleResult[i] = testDeck.getContents().get(i).toString();
+		}
+		
+		testDeck.shuffleCards();//Shuffle again and represent state of deck in a second String array
+		String[] secondShuffleResult = new String[52];
+		for (int i = 0; i < 52; i++) {
+			secondShuffleResult[i] = testDeck.getContents().get(i).toString();
+		}
+		
+		for (int z = 0; z < 100; z++) { //Make 100 comparisons of array pairs
+			System.out.println("Test round: " + z);
+			for (int j = 0; j < 52; j++) { //Compare the two String array representations of the shuffled deck
+				System.out.println("Position reached: " + j);
+				assertFalse(firstShuffleResult[j].equals(secondShuffleResult[j]));
+			}//This test will not fail every time; some cards may
+			//hold equal positions, and so the test may fail sometimes and not others.  This doesn't mean
+			//the deck isn't 'well shuffled', however. It fails as soon as it hits two identical cards in the same
+			//array position.
+			//Thus, this is really a test to show that each shuffle of the deck produces a 'sufficiently different'
+			//ordering of cards, which is what's needed. 
+			//Tested for 99 pairs of arrays; 99 times, no matching cards were found in the same position (best case). 
+		
+		}
+		
+	}
+	
 
 }
+
