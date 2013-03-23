@@ -49,6 +49,11 @@ public interface Hand {
 	 */
 	public String getHandValue();
 	
+	/**
+	 * Prints hand on screen for the player to view.
+	 */
+	public String displayHand();
+	
 
 
 }
