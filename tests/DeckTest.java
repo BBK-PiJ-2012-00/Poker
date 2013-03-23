@@ -132,9 +132,9 @@ public class DeckTest {
 		}
 		
 		for (int z = 0; z < 100; z++) { //Make 100 comparisons of array pairs
-			System.out.println("Test round: " + z);
+			//System.out.println("Test round: " + z);
 			for (int j = 0; j < 52; j++) { //Compare the two String array representations of the shuffled deck
-				System.out.println("Position reached: " + j);
+			//	System.out.println("Position reached: " + j);
 				assertFalse(firstShuffleResult[j].equals(secondShuffleResult[j]));
 			}//This test will not fail every time; some cards may
 			//hold equal positions, and so the test may fail sometimes and not others.  This doesn't mean
@@ -146,6 +146,23 @@ public class DeckTest {
 		
 		}
 		
+	}
+	
+	@Test
+	public void testPopCard() {
+		Deck testDeck = new DeckImpl();
+		Card c = testDeck.popCard();
+		Card expectedCard = new CardImpl(Rank.ACE, Suit.CLUBS);//First card in a new deck is ace of clubs
+		assertTrue(expectedCard.toString().equals(c.toString()));//Assert that both cards are of the same suit and rank
+	}
+	
+	@Test
+	public void testPopCardRemoval() {//Tests that the first card after removal is what's expected
+		Deck testDeck = new DeckImpl();
+		testDeck.popCard();
+		Card topCard = testDeck.getContents().get(0);
+		Card expectedCard = new CardImpl(Rank.TWO, Suit.CLUBS);
+		assertTrue(expectedCard.toString().equals(topCard.toString()));
 	}
 	
 

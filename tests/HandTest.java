@@ -45,5 +45,7 @@ public class HandTest {
 		Card[] contents = testHand.getContents();
 		assertNull(contents[0]); //handContents should be an empty array upon creation.
 	}
+	
+	
 
 }
