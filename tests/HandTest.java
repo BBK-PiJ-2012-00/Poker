@@ -78,8 +78,14 @@ public class HandTest {
 			testHand.addCard(testDeck.popCard());
 		}
 		testHand.sort();
-		//Assert that each consecutive card is greater than or equal to the next
-		//System.out.println(testHand.displayHand());
+		boolean sorted = true;
+		for (int i = 0; i < 4; i++) {
+			if (testHand.getContents()[i].getRank().getValue() > testHand.getContents()[i+1].getRank().getValue()) {
+				sorted = false; //If next card is less than current card (i.e. they're not sorted)
+			}
+		}
+		assertTrue(sorted);
+		
 	}
 	
 	@Test
@@ -113,7 +119,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testEvaluateFourOfAKindFalse() {//Tests that four of a kind value is not wrongly assigned
+	public void testEvaluateFourOfAKindFalse() {//Tests that four of a kind value is not wrongly assigned to borderline case
 		Hand testHand = new FiveCardHand();
 		Card firstCard = new CardImpl(Rank.SEVEN, Suit.HEARTS);
 		testHand.addCard(firstCard);
