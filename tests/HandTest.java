@@ -46,6 +46,19 @@ public class HandTest {
 		assertNull(contents[0]); //handContents should be an empty array upon creation.
 	}
 	
+	//Test addCard()
+	//Test displayHand()
 	
+	@Test
+	public void testSort() {
+		Hand testHand = new FiveCardHand();
+		Deck testDeck = new DeckImpl();
+		testDeck.shuffleCards();
+		for (int i = 0; i < 5; i++) {
+			testHand.addCard(testDeck.popCard());
+		}
+		testHand.sort();
+		System.out.println(testHand.displayHand());
+	}
 
 }
