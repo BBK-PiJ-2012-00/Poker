@@ -47,6 +47,12 @@ public class CardImpl implements Card {
 		//Negative: this object is less than c
 		//0: this object is equal to c
 	}
+
+
+	@Override
+	public int getRankValue() {
+		return RANK.getValue();
+	}
 	
 
 
