@@ -5,7 +5,6 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import code.Hand;
@@ -79,7 +78,54 @@ public class HandTest {
 			testHand.addCard(testDeck.popCard());
 		}
 		testHand.sort();
-		System.out.println(testHand.displayHand());
+		//Assert that each consecutive card is greater than or equal to the next
+		//System.out.println(testHand.displayHand());
+	}
+	
+	@Test
+	public void testEvaluateFourOfAKind() {//Tests for first four cards being four of a kind
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		Card c = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(c);
+		testHand.evaluateHand();
+		String expectedValue = "Four of a Kind";
+		String outputValue = testHand.getHandValue();
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testEvaluateFourOfAKind2() {//Tests for last four cards being four of a kind
+		Hand testHand = new FiveCardHand();
+		Card firstCard = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(firstCard);
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		testHand.evaluateHand();
+		String expectedValue = "Four of a Kind";
+		String outputValue = testHand.getHandValue();
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testEvaluateFourOfAKindFalse() {//Tests that four of a kind value is not wrongly assigned
+		Hand testHand = new FiveCardHand();
+		Card firstCard = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(firstCard);
+		Card secondCard = new CardImpl(Rank.SIX, Suit.SPADES);
+		testHand.addCard(secondCard);
+		for (int i = 0; i < 3; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		testHand.evaluateHand();
+		String outputValue = testHand.getHandValue();
+		assertNull(outputValue);//As no other hands have been implemented yet, handValue should be null if not four of a kind
 	}
 
 }
