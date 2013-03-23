@@ -62,7 +62,7 @@ public class FiveCardHand implements Hand {
 			}
 		}
 		catch (IllegalArgumentException e) {
-			
+			e.printStackTrace();//Needs replacing with something more explicit!
 		}
 		
 	}
