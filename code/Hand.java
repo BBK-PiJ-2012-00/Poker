@@ -32,7 +32,8 @@ public interface Hand {
 	public void discardCard(Card c);
 	
 	/**
-	 * Sorts the cards in the hand by rank.
+	 * Sorts the cards in the hand by rank. This is useful before evaluating 
+	 * a hand.
 	 */
 	public void sort();
 	

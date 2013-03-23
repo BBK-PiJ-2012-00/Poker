@@ -76,16 +76,41 @@ public class FiveCardHand implements Hand {
 
 	
 	@Override
-	public void evaluateHand() {
-		// TODO Auto-generated method stub
+	public void evaluateHand() { //Should perhaps return a String so that this can be called directly
+		//First sort the hand; this makes it easier to evaluate
+		this.sort();
+		//Check for four of a kind
+		boolean fourOfAKind = true;
+		for (int i = 0; i < 3; i++) { //Test the first four cards
+			if (handContents[i].getRank().getValue() != handContents[i+1].getRank().getValue()) {
+				fourOfAKind = false;
+				break;
+			}
+		}
+		if (!fourOfAKind) { //Test last four cards only if first four test false for four of a kind
+			for (int i = 1; i < 4; i++) { //Test the last four cards
+				if (handContents[i].getRank().getValue() != handContents[i+1].getRank().getValue()) {
+					fourOfAKind = false;
+					break;
+				}
+			}
+		}
+		if (fourOfAKind) {
+			System.out.println("Setting hand value...");
+			handValue = "Four of a Kind";
+			return;
+		}
+		else { //Test for flush
+			
+		}
 		
 	}
 
 
 	@Override
 	public String getHandValue() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(handValue);
+		return handValue;
 	}
 
 
