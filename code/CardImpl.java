@@ -7,7 +7,7 @@ package code;
  * @author Anna Taylor
  *
  */
-public class CardImpl implements Card, Comparable<Card> {
+public class CardImpl implements Card {
 	private final Suit SUIT;
 	private final Rank RANK;
 	
@@ -42,7 +42,10 @@ public class CardImpl implements Card, Comparable<Card> {
 	@Override
 	public int compareTo(Card c) {
 		CardImpl card = (CardImpl) c;
-		return this.RANK.getValue() - card.RANK.getValue(); 
+		return this.RANK.getValue() - card.RANK.getValue();
+		//Postive value: this object is greater than c														   
+		//Negative: this object is less than c
+		//0: this object is equal to c
 	}
 	
 
