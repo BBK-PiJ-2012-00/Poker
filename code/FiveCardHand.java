@@ -105,7 +105,7 @@ public class FiveCardHand implements Hand {
 		
 		//Test for flush (only reachable if fourOfAKind is false)
 		boolean flush = true;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (handContents[i].getSuit() != handContents[i+1].getSuit()) {
 				flush = false;
 				break; //Stop testing for flush as soon as 
@@ -133,7 +133,7 @@ public class FiveCardHand implements Hand {
 		}			
 	
 		//All other possible straight hands tested next (unreachable if another hand has already been found)
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (handContents[i].getRankValue() != (handContents[i+1].getRankValue() - 1)) {
 				straight = false;
 			}
@@ -153,7 +153,7 @@ public class FiveCardHand implements Hand {
 
 	@Override
 	public String getHandValue() {
-		System.out.println(handValue); //For testing purposes
+		System.out.println(handValue); //For testing purposes (PENDING REMOVAL)
 		return handValue;
 	}
 
