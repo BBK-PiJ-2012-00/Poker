@@ -158,6 +158,7 @@ public class HandTest {
 		Card c = new CardImpl(Rank.values()[2], Suit.DIAMONDS);
 		testHand.addCard(c);
 		testHand.evaluateHand();
+		System.out.println("False flush hand: " + testHand.displayHand());
 		String outputValue = testHand.getHandValue();
 		assertFalse(outputValue.equals("Flush"));
 	}
@@ -206,6 +207,26 @@ public class HandTest {
 		String expectedValue = "Straight";
 		assertEquals(expectedValue, outputValue);	
 		
+	}
+	
+	@Test
+	public void testThreeOfAKindFirstThree() { //Tests for three of a kind in first position
+		Hand testHand = new FiveCardHand();
+		Card first = new CardImpl(Rank.TWO, Suit.CLUBS);
+		testHand.addCard(first);
+		Card second = new CardImpl(Rank.TWO, Suit.SPADES);
+		testHand.addCard(second);		
+		Card third = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(third);
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SIX, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Three of a Kind";
+		assertEquals(expectedValue, outputValue);
 	}
 	
 	
