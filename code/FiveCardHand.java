@@ -185,6 +185,7 @@ public class FiveCardHand implements Hand {
 		
 		//If no better hand is found, the player has:
 		handValue = handContents[4].toString() + " High";
+		processingValue = 0; //For dealer's decision making benefit; 0 means no made hand
 		
 			
 		
@@ -211,7 +212,7 @@ public class FiveCardHand implements Hand {
 		this.sort(); //Hand is easier to deal with if sorted before display
 		String handDisplay = "";
 		for (int i = 0; i < SIZE; i++) {
-			handDisplay += handContents[i].toString() + " ";
+			handDisplay += (i+1) + ": " + handContents[i].toString() + "\n";
 		}
 		return handDisplay;
 	}

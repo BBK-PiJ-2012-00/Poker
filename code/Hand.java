@@ -52,10 +52,10 @@ public interface Hand {
 	
 	/**
 	 * Returns an integer for use if the program-controlled dealer has a handValue
-	 * of Three of a Kind; this allows for decisions about which cards to throw away.  A 
-	 * value of 1 means that the first three cards are Three of a Kind; a value of 2 means
-	 * the middle three cards are Three of a Kind; a value of 3 means the last three cards in 
-	 * the hand are Three of a Kind.
+	 * of Three of a Kind, Two Pair, and One Pair; this allows for decisions about which cards to throw away
+	 * by indicating the positions of the cards to be kept (i.e. a value of 1 for Three of a Kind means the
+	 * three cards that constitute that handValue are the first three cards).
+	 * 
 	 * @return int the value of processingValue field
 	 */
 	public int getProcessingValue();
