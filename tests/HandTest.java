@@ -80,7 +80,7 @@ public class HandTest {
 		testHand.sort();
 		boolean sorted = true;
 		for (int i = 0; i < 4; i++) {
-			if (testHand.getContents()[i].getRank().getValue() > testHand.getContents()[i+1].getRank().getValue()) {
+			if (testHand.getContents()[i].getRankValue() > testHand.getContents()[i+1].getRankValue()) {
 				sorted = false; //If next card is less than current card (i.e. they're not sorted)
 			}
 		}
@@ -132,6 +132,35 @@ public class HandTest {
 		testHand.evaluateHand();
 		String outputValue = testHand.getHandValue();
 		assertNull(outputValue);//As no other hands have been implemented yet, handValue should be null if not four of a kind
+	}
+	
+	@Test
+	public void testEvaluateFlush() { //Tests that a flush is picked up by evaluateHand();
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			testHand.addCard(c);
+		}
+		testHand.evaluateHand();
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Flush";
+		assertEquals(expectedValue, outputValue);
+		
+	}
+	
+	@Test
+	public void testEvaluateFlushFalse() { //Tests a borderline case where four cards have the same suit
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			testHand.addCard(c);
+		}
+		Card c = new CardImpl(Rank.values()[2], Suit.DIAMONDS);
+		testHand.addCard(c);
+		testHand.evaluateHand();
+		String outputValue = testHand.getHandValue();
+		assertNull(outputValue); //If flush or four of a kind are not found at this stage, handValue is null.
+		
 	}
 
 }

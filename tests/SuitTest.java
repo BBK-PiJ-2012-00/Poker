@@ -21,5 +21,16 @@ public class SuitTest {
 		String output = Suit.DIAMONDS.toString();
 		assertEquals("Problem with toString() override", expected, output);
 	}
+	
+	@Test 
+	public void equalityAmongSuits() {
+		Suit diamond1 = Suit.DIAMONDS;
+		Suit diamond2 = Suit.DIAMONDS;
+		boolean testEquality = false;
+		if (diamond1 != diamond2) {
+			testEquality = true;
+		}
+		assertFalse(testEquality);
+	}
 
 }
