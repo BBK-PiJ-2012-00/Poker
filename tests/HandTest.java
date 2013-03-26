@@ -64,8 +64,10 @@ public class HandTest {
 			Card c = new CardImpl(Rank.values()[i], Suit.values()[0]);
 			testHand.addCard(c);
 		}
-		String expected = "[Two Clubs] [Three Clubs] [Four Clubs] [Five Clubs] [Six Clubs] ";
+		String expected = "1: [Two Clubs]" + "\n" + "2: [Three Clubs]" + "\n" + "3: [Four Clubs]" + "\n"
+				+ "4: [Five Clubs]" + "\n" + "5: [Six Clubs]" + "\n";
 		String output = testHand.displayHand();
+		System.out.println(output);
 		assertEquals(expected, output);
 	}
 	
