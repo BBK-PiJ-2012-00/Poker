@@ -51,6 +51,16 @@ public interface Hand {
 	public String getHandValue();
 	
 	/**
+	 * Returns an integer for use if the program-controlled dealer has a handValue
+	 * of Three of a Kind; this allows for decisions about which cards to throw away.  A 
+	 * value of 1 means that the first three cards are Three of a Kind; a value of 2 means
+	 * the middle three cards are Three of a Kind; a value of 3 means the last three cards in 
+	 * the hand are Three of a Kind.
+	 * @return int the value of processingValue field
+	 */
+	public int getProcessingValue();
+	
+	/**
 	 * Prints hand on screen for the player to view.
 	 */
 	public String displayHand();

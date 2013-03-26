@@ -12,6 +12,7 @@ import java.util.Arrays;
  */
 public class FiveCardHand implements Hand {
 	private String handValue; //Should hand values be enums? 
+	int processingValue = 0; //For use evaluating which cards to keep when discarding from dealer's hand
 	
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
@@ -126,12 +127,13 @@ public class FiveCardHand implements Hand {
 					straight = false;
 				}
 			}
+			if (straight) {
+				handValue = "Straight";
+				return;
+			}			
+		
 		}
-		if (straight) {
-			handValue = "Straight";
-			return;
-		}			
-	
+		
 		//All other possible straight hands tested next (unreachable if another hand has already been found)
 		for (int i = 0; i < 4; i++) {
 			if (handContents[i].getRankValue() != (handContents[i+1].getRankValue() - 1)) {
@@ -142,6 +144,47 @@ public class FiveCardHand implements Hand {
 			handValue = "Straight";
 			return;
 		}
+		
+		//Test for three of a kind
+		boolean threeOfAKind = true;
+		for (int i = 0; i < 2; i++) { //Test first three cards
+			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
+				threeOfAKind = false;
+				break;
+			}
+		}
+		if (threeOfAKind) {
+			handValue = "Three of a Kind";
+			processingValue = 1;
+			return;
+		}
+		
+		for (int i = 1; i < 3; i++) { //Test middle three cards
+			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
+				threeOfAKind = false;
+				break;
+			}
+		}
+		if (threeOfAKind) {
+			handValue = "Three of a Kind";
+			processingValue = 2;
+			return;
+		}
+		
+		for (int i = 2; i < 4; i++) { //Test last three cards
+			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
+				threeOfAKind = false;
+				break;
+			}
+		}
+		if (threeOfAKind) {
+			handValue = "Three of a Kind";
+			processingValue = 3;
+			return;
+		}
+		
+		//If no better hand is found, the player has:
+		handValue = handContents[4].toString() + " High";
 		
 			
 		
@@ -156,10 +199,15 @@ public class FiveCardHand implements Hand {
 		System.out.println(handValue); //For testing purposes (PENDING REMOVAL)
 		return handValue;
 	}
+	
+	@Override
+	public int getProcessingValue() {
+		return processingValue;
+	}
 
 
 	@Override
-	public String displayHand() {
+	public String displayHand() { //Add card positions to this
 		this.sort(); //Hand is easier to deal with if sorted before display
 		String handDisplay = "";
 		for (int i = 0; i < SIZE; i++) {
