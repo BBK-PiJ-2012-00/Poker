@@ -103,6 +103,17 @@ public class FiveCardHand implements Hand {
 		}
 		
 		else { //Test for flush
+			boolean flush = true;
+			for (int i = 0; i < 3; i++) {
+				if (handContents[i].getSuit() != handContents[i+1].getSuit()) {
+					flush = false;
+					break; //Stop testing for flush as soon as 
+				}
+			}
+			if (flush) {
+				handValue = "Flush";
+				return; //Don't test for any other handValues if a Flush is found
+			}
 			
 		}
 		
