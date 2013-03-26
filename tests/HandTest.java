@@ -174,5 +174,40 @@ public class HandTest {
 		String expectedValue = "Flush";
 		assertEquals(expectedValue, outputValue);
 	}
+	
+	@Test
+	public void testLowAceStraight() {
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			testHand.addCard(c);
+		}	
+		Card ace = new CardImpl(Rank.ACE, Suit.CLUBS);
+		testHand.addCard(ace);
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Straight";
+		assertEquals(expectedValue, outputValue);		
+	}
+	
+	@Test 
+	public void testStandardStraight() {
+		Hand testHand = new FiveCardHand();
+		for (int i = 7; i < 11; i++) { //for a standard straight (i.e. ace isn't low) 
+			Card c = new CardImpl(Rank.values()[i], Suit.CLUBS);
+			testHand.addCard(c);
+		}	
+		Card king = new CardImpl(Rank.KING, Suit.SPADES);
+		testHand.addCard(king);
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Straight";
+		assertEquals(expectedValue, outputValue);	
+		
+	}
+	
+	
 
 }
