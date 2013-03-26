@@ -64,7 +64,7 @@ public class HandTest {
 			Card c = new CardImpl(Rank.values()[i], Suit.values()[0]);
 			testHand.addCard(c);
 		}
-		String expected = "[Ace Clubs] [Two Clubs] [Three Clubs] [Four Clubs] [Five Clubs] ";
+		String expected = "[Two Clubs] [Three Clubs] [Four Clubs] [Five Clubs] [Six Clubs] ";
 		String output = testHand.displayHand();
 		assertEquals(expected, output);
 	}
@@ -131,7 +131,7 @@ public class HandTest {
 		}
 		testHand.evaluateHand();
 		String outputValue = testHand.getHandValue();
-		assertNull(outputValue);//As no other hands have been implemented yet, handValue should be null if not four of a kind
+		assertFalse(outputValue.equals("Four of a Kind"));
 	}
 	
 	@Test
@@ -159,8 +159,20 @@ public class HandTest {
 		testHand.addCard(c);
 		testHand.evaluateHand();
 		String outputValue = testHand.getHandValue();
-		assertNull(outputValue); //If flush or four of a kind are not found at this stage, handValue is null.
-		
+		assertFalse(outputValue.equals("Flush"));
+	}
+	
+	@Test
+	public void testEvaluateFlushOverStraight() { //Tests that a straight flush is assigned flush (as straight flush isn't in the brief)
+		Hand testHand = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			testHand.addCard(c);
+		}		
+		testHand.evaluateHand();
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Flush";
+		assertEquals(expectedValue, outputValue);
 	}
 
 }
