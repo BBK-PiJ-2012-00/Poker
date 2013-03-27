@@ -892,6 +892,30 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 	}
 	
+	@Test
+	public void testLowerPairValue() {
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		int outputValue = testHand.getLowerPairValue();
+		int expectedValue = 2;
+		assertEquals(expectedValue, outputValue);
+	}
+	
 	
 	
 }
@@ -899,3 +923,5 @@ public class HandTest {
 	//straight vs three of a kind
 	//two pair vs one pair
 	//TEST HIGH CARD
+//Test more pairValue
+//Test lowerPairVaule
