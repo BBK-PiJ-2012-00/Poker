@@ -74,6 +74,11 @@ public interface Hand {
 	 */
 	public String displayHand();
 	
+	/**
+	 * Clears handContents to prepare for a new game round (resets the array).
+	 */
+	public void clearHand();
+	
 
 
 }

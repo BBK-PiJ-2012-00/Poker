@@ -282,4 +282,11 @@ public class FiveCardHand implements Hand {
 		return handValueScore;
 	}
 
+
+	
+	@Override
+	public void clearHand() {
+		handContents = new CardImpl[SIZE];		
+	}
+
 }
