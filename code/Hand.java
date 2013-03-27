@@ -7,7 +7,7 @@ package code;
  * @author Anna Taylor
  *
  */
-public interface Hand {
+public interface Hand extends Comparable<Hand> {
 	
 	/**
 	 * Accessor method to access the cards that make up a hand.

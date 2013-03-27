@@ -182,7 +182,6 @@ public class FiveCardHand implements Hand {
 		
 		//Test for Pairs
 		boolean onePair = false;
-		boolean twoPair = false;
 		//The following tests for a pair in the first position (PPXXX), potentially followed by another pair
 		if (handContents[0].getRankValue() == handContents[1].getRankValue()) {
 			onePair = true;
@@ -191,15 +190,13 @@ public class FiveCardHand implements Hand {
 			handValue = "One Pair";
 			
 			if (handContents[2].getRankValue() == handContents[3].getRankValue()) { // This would mean two consecutive pairs at the front end of hand
-				twoPair = true;														// PPPPX
-				handValue = "Two Pair";
+				handValue = "Two Pair";												// PPPPX
 				processingValue = 1;
 				handValueScore = 3;
 				return; //Don't test any further
 			}
 			
 			else if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //This means PPXPP formation
-				twoPair = true;
 				handValue = "Two Pair";
 				processingValue = 2;
 				handValueScore = 3;
@@ -218,7 +215,6 @@ public class FiveCardHand implements Hand {
 			handValueScore = 2;
 			
 			if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //Checks for XPPPP
-				twoPair = true;
 				handValue = "Two Pair";
 				processingValue = 3;
 				handValueScore = 3;
@@ -283,10 +279,22 @@ public class FiveCardHand implements Hand {
 	}
 
 
-	
 	@Override
 	public void clearHand() {
 		handContents = new CardImpl[SIZE];		
+	}
+	
+	/**
+	 * Hands are compared by handValueScore; a better hand has a higher score.
+	 * Four of a Kind has a score of 7, high card 1.
+	 */
+	@Override
+	public int compareTo(Hand h) {
+		FiveCardHand hand = (FiveCardHand) h;
+		return this.handValueScore - hand.handValueScore;
+		//Positive value: this object is greater than hand														   
+		//Negative: this object is less than hand
+		//0: this object is equal to hand
 	}
 
 }
