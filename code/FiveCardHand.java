@@ -71,6 +71,7 @@ public class FiveCardHand implements Hand {
 		if (fourOfAKind) {
 			handValue = "Four of a Kind";
 			processingValue = 5;
+			handValueScore = 7;
 			return; //Don't test any further once a handValue is found
 		}
 		
@@ -85,6 +86,7 @@ public class FiveCardHand implements Hand {
 		if (fourOfAKind) {
 			handValue = "Four of a Kind";
 			processingValue = 5;
+			handValueScore = 7;
 			return; //Don't test for any other handValues if Four of a Kind is found
 		}
 		
@@ -99,6 +101,7 @@ public class FiveCardHand implements Hand {
 		if (flush) {
 			handValue = "Flush";
 			processingValue = 5;
+			handValueScore = 6;
 			return; //Don't test for any other handValues if a Flush is found
 		}
 		
@@ -115,6 +118,7 @@ public class FiveCardHand implements Hand {
 			if (straight) {
 				handValue = "Straight";
 				processingValue = 5;
+				handValueScore = 5;
 				return;
 			}			
 		
@@ -129,6 +133,7 @@ public class FiveCardHand implements Hand {
 		if (straight) {
 			handValue = "Straight";
 			processingValue = 5;
+			handValueScore = 5;
 			return;
 		}
 		
@@ -143,6 +148,7 @@ public class FiveCardHand implements Hand {
 		if (threeOfAKind) {
 			handValue = "Three of a Kind";
 			processingValue = 1;
+			handValueScore = 4;
 			return;
 		}
 		
@@ -156,6 +162,7 @@ public class FiveCardHand implements Hand {
 		if (threeOfAKind) {
 			handValue = "Three of a Kind";
 			processingValue = 2;
+			handValueScore = 4;
 			return;
 		}
 		
@@ -169,6 +176,7 @@ public class FiveCardHand implements Hand {
 		if (threeOfAKind) {
 			handValue = "Three of a Kind";
 			processingValue = 3;
+			handValueScore = 4;
 			return;
 		}
 		
@@ -179,12 +187,14 @@ public class FiveCardHand implements Hand {
 		if (handContents[0].getRankValue() == handContents[1].getRankValue()) {
 			onePair = true;
 			processingValue = 1;
+			handValueScore = 2;
 			handValue = "One Pair";
 			
 			if (handContents[2].getRankValue() == handContents[3].getRankValue()) { // This would mean two consecutive pairs at the front end of hand
 				twoPair = true;														// PPPPX
 				handValue = "Two Pair";
 				processingValue = 1;
+				handValueScore = 3;
 				return; //Don't test any further
 			}
 			
@@ -192,6 +202,7 @@ public class FiveCardHand implements Hand {
 				twoPair = true;
 				handValue = "Two Pair";
 				processingValue = 2;
+				handValueScore = 3;
 				return; //Don't test any further
 			}
 			else if (onePair) {
@@ -204,11 +215,13 @@ public class FiveCardHand implements Hand {
 			onePair = true;
 			handValue = "One Pair";
 			processingValue = 2;
+			handValueScore = 2;
 			
 			if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //Checks for XPPPP
 				twoPair = true;
 				handValue = "Two Pair";
 				processingValue = 3;
+				handValueScore = 3;
 				return; // Don't test any further
 			}
 			else if (onePair) {
@@ -221,6 +234,7 @@ public class FiveCardHand implements Hand {
 			onePair = true;
 			handValue = "One Pair";
 			processingValue = 3;
+			handValueScore = 2;
 			return; //Don't test any further
 		}
 		
@@ -229,11 +243,13 @@ public class FiveCardHand implements Hand {
 			onePair = true;
 			handValue = "One Pair";
 			processingValue = 4;
+			handValueScore = 2;
 			return; //Don't test any further
 		}		
 		
 		//If no better hand is found, the player has:
 		handValue = handContents[4].toString() + " High";
+		handValueScore = 1;
 		
 	}
 
