@@ -70,16 +70,20 @@ public class FiveCardHand implements Hand {
 				break;
 			}
 		}
-		if (!fourOfAKind) { //Test last four cards only if first four test false for four of a kind
-			for (int i = 1; i < 4; i++) { //Test the last four cards
-				if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
-					fourOfAKind = false;
-					break;
-				}
+		if (fourOfAKind) {
+			handValue = "Four of a Kind";
+			return; //Don't test any further once a handValue is found
+		}
+		
+		fourOfAKind = true; //Reset the value here for the benefit of the next test
+		for (int i = 1; i < 4; i++) { //Test the last four cards
+			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
+				fourOfAKind = false;
+				break;
 			}
 		}
+		
 		if (fourOfAKind) {
-			System.out.println("Setting hand value...");
 			handValue = "Four of a Kind";
 			return; //Don't test for any other handValues if Four of a Kind is found
 		}
