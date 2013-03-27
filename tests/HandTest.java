@@ -467,6 +467,55 @@ public class HandTest {
 		
 	}
 	
+	@Test
+	public void testTwoPairPosition2() { //PPXPP
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Two Pair";
+		assertEquals(expectedValue, outputValue);
+		
+	}
+	
+	@Test
+	public void testTwoPairPosition3() { //XPPPP
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SIX, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.KING, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card fifth = new CardImpl(Rank.FIVE, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Two Pair";
+		assertEquals(expectedValue, outputValue);
+		
+	}
 	
 	//Write tests to check that processingValue is set correctly from Three of a Kind downwards
 
