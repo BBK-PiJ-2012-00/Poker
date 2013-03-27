@@ -689,6 +689,22 @@ public class HandTest {
 	}
 	
 	@Test
+	public void testHighCard() { //Test that a non-made hand is correctly evaluated
+		Hand testHand= new FiveCardHand();
+		for (int i = 0; i < 4; i++) { //for a standard straight (i.e. ace isn't low) 
+			Card c = new CardImpl(Rank.values()[i+2], Suit.CLUBS);
+			testHand.addCard(c);
+		}	
+		Card ace = new CardImpl(Rank.ACE, Suit.SPADES);
+		testHand.addCard(ace);
+		
+		testHand.evaluateHand();		
+		String expectedValue = ace.toString() + " High";
+		String outputValue = testHand.getHandValue();
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
 	public void testEvaluateHandBorderline() { // Test that Three of a Kind is picked over One Pair
 		Hand testHand = new FiveCardHand();
 		
@@ -783,7 +799,43 @@ public class HandTest {
 		assertTrue(output < 0); //Negative values means object that invoked compareTo is less than parameter object
 	}
 	
+	@Test
+	public void testHandComparisonPairHighCard() { //Test pair vs high card
+		Hand pair = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SEVEN, Suit.values()[i]);
+			pair.addCard(c);
+		}
+		
+		Card first = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		pair.addCard(first);
+		
+		Card second = new CardImpl(Rank.THREE, Suit.DIAMONDS);
+		pair.addCard(second);
+		
+		Card fifth = new CardImpl(Rank.KING, Suit.SPADES);
+		pair.addCard(fifth);
+		
+		pair.evaluateHand();
+		
+		Hand highCard = new FiveCardHand();
+		for (int i = 0; i < 4; i++) { //for a standard straight (i.e. ace isn't low) 
+			Card c = new CardImpl(Rank.values()[i+2], Suit.CLUBS);
+			highCard.addCard(c);
+		}	
+		Card king = new CardImpl(Rank.KING, Suit.SPADES);
+		highCard.addCard(king);
+		
+		highCard.evaluateHand();
+		
+		//Assert that high card is less than one pair
+		int output = highCard.compareTo(pair);
+		assertTrue(output < 0); //Negative values means object that invoked compareTo is less than parameter object
+	}
+	
 }
 	
 	//straight vs three of a kind
 	//two pair vs one pair
+	//TEST HIGH CARD
