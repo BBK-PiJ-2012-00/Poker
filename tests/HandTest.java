@@ -276,7 +276,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testThreeKindProcessingValue() { //To test that processingValue field is set correctly (and that the getter works)
+	public void testThreeKindProcessingValueLast() { //To test that processingValue field is set correctly (and that the getter works)
 		Hand testHand = new FiveCardHand();
 		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
 		testHand.addCard(first);
@@ -293,6 +293,50 @@ public class HandTest {
 
 		int outputValue = testHand.getProcessingValue();
 		int expectedValue = 3;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testThreeKindProcessingValueMid() {
+		Hand testHand = new FiveCardHand();
+		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		for (int i = 1; i < 4; i++) {
+			Card c = new CardImpl(Rank.FOUR, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+			
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		
+		int outputValue = testHand.getProcessingValue();
+		int expectedValue = 2;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testThreeKindProcessingValueFirst() {
+		Hand testHand = new FiveCardHand();
+		Card first = new CardImpl(Rank.TWO, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		Card second = new CardImpl(Rank.TWO, Suit.SPADES);
+		testHand.addCard(second);		
+		
+		Card third = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(third);
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SIX, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		testHand.evaluateHand();
+		int outputValue = testHand.getProcessingValue();
+		int expectedValue = 1;
 		assertEquals(expectedValue, outputValue);
 	}
 	
