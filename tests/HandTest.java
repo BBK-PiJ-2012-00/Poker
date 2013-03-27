@@ -256,14 +256,14 @@ public class HandTest {
 	@Test
 	public void testThreeOfAKindLastThree() { //XXTTT
 		Hand testHand = new FiveCardHand();
-		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
+		Card first = new CardImpl(Rank.NINE, Suit.CLUBS);
 		testHand.addCard(first);
 		
-		Card second = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		Card second = new CardImpl(Rank.TEN, Suit.DIAMONDS);
 		testHand.addCard(second);
 		
 		for (int i = 2; i < 5; i++) {
-			Card c = new CardImpl(Rank.JACK, Suit.values()[i-1]);
+			Card c = new CardImpl(Rank.KING, Suit.values()[i-1]);
 			testHand.addCard(c);
 		}	
 		
@@ -869,48 +869,28 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testSpecialCase() {
+	public void testPairValue() {
 		Hand testHand = new FiveCardHand();
-		Card first = new CardImpl(Rank.SIX, Suit.CLUBS);
-		testHand.addCard(first);
 		
-		Card second = new CardImpl(Rank.EIGHT, Suit.CLUBS);
-		testHand.addCard(second);
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
 		
-		Card third = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
-		testHand.addCard(third);
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
 		
-		Card fourth = new CardImpl(Rank.KING, Suit.DIAMONDS);
-		testHand.addCard(fourth);
-		
-		Card fifth = new CardImpl(Rank.KING, Suit.SPADES);
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
 		testHand.addCard(fifth);
 		
 		testHand.evaluateHand();
-		
-		Hand testHand2 = new FiveCardHand();
-		Card first2 = new CardImpl(Rank.FOUR, Suit.HEARTS);
-		testHand2.addCard(first2);
-		
-		Card second2 = new CardImpl(Rank.FIVE, Suit.SPADES);
-		testHand2.addCard(second2);
-		
-		Card third2 = new CardImpl(Rank.SEVEN, Suit.DIAMONDS);
-		testHand2.addCard(third2);
-		
-		Card fourth2 = new CardImpl(Rank.TEN, Suit.CLUBS);
-		testHand2.addCard(fourth2);
-		
-		Card fifth2 = new CardImpl(Rank.KING, Suit.HEARTS);
-		testHand2.addCard(fifth2);
-		
-		testHand.evaluateHand();
-		
-		
-		int outputValue = testHand.compareTo(testHand2);
-		assertTrue(outputValue > 0);
+		System.out.println(testHand.displayHand());
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 11;
+		assertEquals(expectedValue, outputValue);
 	}
-	
 	
 	
 	
