@@ -78,6 +78,15 @@ public interface Hand extends Comparable<Hand> {
 	 */
 	public int getPairValue();
 	
+	/**
+	 * Accesses the lowerPairValue field, for use when both players have Two Pair hands;
+	 * should the higher value pair be the same, lowerPairValue allows for comparison of
+	 * the other pair.
+	 * 
+	 * @return int the value of lowerPairValue.
+	 */
+	public int getLowerPairValue();
+	
 	
 	/**
 	 * Prints hand on screen for the player to view.

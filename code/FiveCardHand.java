@@ -12,10 +12,14 @@ import java.util.Arrays;
  */
 public class FiveCardHand implements Hand {
 	private String handValue; 
+	
 	private int handValueScore; //The numerical score associated with a hand
 	int processingValue = 0; //For use evaluating which cards to keep when discarding from dealer's hand
+	
 	int pairValue; // The rank value of Four of a Kind, Three of a Kind and Pairs are stored here for easy comparison
-				   // in the even that the two players have a hand of the same type
+				   // in the event that the two players have a hand of the same type
+	int lowerPairValue; //For Two Pair hands only; if two players have the same higher pair, the program then compares on the
+						// lower pair.
 	
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
@@ -202,7 +206,11 @@ public class FiveCardHand implements Hand {
 				processingValue = 1;
 				handValueScore = 3;
 				if (handContents[2].getRankValue() > pairValue) {
+					lowerPairValue = pairValue; //Saves the lower pair in case it's required during comparison
 					pairValue = handContents[2].getRankValue(); //For Two Pair, take the higher pair value
+				}
+				else {
+					lowerPairValue = handContents[2].getRankValue(); 
 				}
 				
 				return; //Don't test any further
@@ -213,7 +221,11 @@ public class FiveCardHand implements Hand {
 				processingValue = 2;
 				handValueScore = 3;
 				if (handContents[3].getRankValue() > pairValue) {
+					lowerPairValue = pairValue; //Saves the lower pair in case it's required during comparison
 					pairValue = handContents[3].getRankValue(); //For Two Pair, take the higher pair value
+				}
+				else {
+					lowerPairValue = handContents[3].getRankValue();
 				}
 				
 				return; //Don't test any further
@@ -324,6 +336,12 @@ public class FiveCardHand implements Hand {
 	@Override
 	public int getPairValue() {
 		return pairValue;
+	}
+
+
+	@Override
+	public int getLowerPairValue() {
+		return lowerPairValue;
 	}
 
 }
