@@ -46,27 +46,9 @@ public class FiveCardHand implements Hand {
 
 
 	@Override
-	public void discardCard(Card c) {
-		try {
-			if (availableIndex > 0) {
-				for (int i = 0; i < handContents.length; i++) {
-					if (handContents[i] == c) {
-						handContents[i] = null;
-						this.sort();//Re-sort the hand after card removal, leaving last index(es) free
-						availableIndex--;
-						return; //If found, remove and exit the method;
-					}
-				}
-				throw illegalArgEx;//If this line is reached, no matching card was found (so it's not in the array)
-			}
-			else {
-				throw illegalArgEx;//If the array is empty, a card cannot be removed from it
-			}
-		}
-		catch (IllegalArgumentException e) {
-			e.printStackTrace();//Needs replacing with something more explicit!
-		}
-		
+	public void discardCard(int index) {
+		handContents[index - 1] = null;
+		return;
 	}
 
 	
@@ -182,6 +164,14 @@ public class FiveCardHand implements Hand {
 			processingValue = 3;
 			return;
 		}
+		
+		//Test for Two Pair
+		//boolean twoPair = true;
+		//for (int i = 0; i < 2; i++) {
+		
+		
+		
+		//Test for One Pair
 		
 		//If no better hand is found, the player has:
 		handValue = handContents[4].toString() + " High";

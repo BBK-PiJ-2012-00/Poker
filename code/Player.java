@@ -9,7 +9,6 @@ package code;
  */
 public interface Player {
 	
-	public void setName(String name);
 	
 	public String getName();
 	
@@ -19,5 +18,22 @@ public interface Player {
 	 * @param Card dealt by dealer off the top of the deck.
 	 */
 	public void receiveCard(Card c);
+	
+	
+	 /**
+     * Method to retrieve the hand that the player is holding
+     * 
+     * @return Hand of player
+     */
+    public Hand getHand();
+    
+    
+    /**
+     * Method for the dealer player to select which cards to discard
+     * 
+     * @return int representing how many cards it has discarded
+     * so that TableTopImpl knows how many cards to replace.
+     */
+    public int chooseDiscard();
 
 }

@@ -29,7 +29,7 @@ public interface Hand {
 	 * 
 	 * @param Card the card to be removed from the hand.
 	 */
-	public void discardCard(Card c);
+	public void discardCard(int index);
 	
 	/**
 	 * Sorts the cards in the hand by rank. This is useful before evaluating 
@@ -53,8 +53,8 @@ public interface Hand {
 	/**
 	 * Returns an integer for use if the program-controlled dealer has a handValue
 	 * of Three of a Kind, Two Pair, and One Pair; this allows for decisions about which cards to throw away
-	 * by indicating the positions of the cards to be kept (i.e. a value of 1 for Three of a Kind means the
-	 * three cards that constitute that handValue are the first three cards).
+	 * by indicating the array positions of the cards to be kept (i.e. a value of 1 for Three of a Kind means the
+	 * three cards that constitute that handValue are the first three cards CCCXX).
 	 * 
 	 * @return int the value of processingValue field
 	 */
