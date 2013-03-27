@@ -58,6 +58,8 @@ public class TableTopImpl implements TableTop {
                 deck = new DeckImpl(); // a new deck object is created at the start of each hand and shuffled
                 System.out.println("shuffling deck....");
                 deck.shuffleCards();
+                humanPlayer.getHand().clearHand();
+                dealerPlayer.getHand().clearHand();
                 pause();
                 System.out.println("dealing cards....");
                 for(int i = 0; i < 5; i++) {
@@ -67,7 +69,9 @@ public class TableTopImpl implements TableTop {
                 pause();
 
                 System.out.println("Your hand is: ");
+                humanPlayer.getHand().evaluateHand();
                 System.out.println(humanPlayer.getHand().displayHand());
+                System.out.println("You have: " + humanPlayer.getHand().getHandValue());
                 pause();
                 String x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
                 int cardsToBin = Integer.parseInt(x);
@@ -101,9 +105,13 @@ public class TableTopImpl implements TableTop {
                 {
                     humanPlayer.receiveCard(deck.popCard());
                 }
-
-                System.out.println("Your updated hand is: "); 
+                System.out.println("dealing your replacement cards......");
+                pause();
+                System.out.println("Your final 5-card hand is: "); 
+                humanPlayer.getHand().evaluateHand();
+                
                 System.out.println(humanPlayer.getHand().displayHand());
+                System.out.println("You have: " + humanPlayer.getHand().getHandValue());
                 pause();
                 System.out.println("Finished player discard....computer is thinking");
                 pause();
@@ -118,14 +126,25 @@ public class TableTopImpl implements TableTop {
                 System.out.println(dealerPlayer.getHand().displayHand());
                 System.out.println("For a: " + dealerPlayer.getHand().getHandValue());
                 System.out.println("You have: " + humanPlayer.getHand().getHandValue());
+                compareHands();
                 
+                String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
                 
-                int comparison = humanPlayer.getHand().compareTo(dealerPlayer.getHand()); //this section compares hands at showdown
-                System.out.println("COMPARISON: " + comparison);
-                if(comparison < 0) {
+                if (cont == "N" || cont == "n") {
+                    finished = true;
+                    System.out.append("Thanks for playing!");
+                }
+            }
+        }
+        
+
+
+        public void compareHands() {
+            int comparison = humanPlayer.getHand().compareTo(dealerPlayer.getHand()); //this section compares hands at showdown
+                if(comparison > 0) {
                     System.out.println("Congratulations! You have won the hand!");
                 }
-                else if(comparison > 0) {
+                else if(comparison < 0) {
                     System.out.println("The computer has won the hand! Better luck next time!");
                 }
                 else if(comparison == 0) {
@@ -142,24 +161,15 @@ public class TableTopImpl implements TableTop {
                         }
                         if(i == 0 && compDraw == humanDraw) {
                             System.out.println("The hand is a draw! Please play again.");
-                        }
-                    
+                        }      
                     }
-                    
                 }
-                String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
-                
-                if (cont == "N" || cont == "n") {
-                    finished = true;
-                    System.out.append("Thanks for playing!");
-                }
-            }
         }
+    
 	public static void main(String[] args) {
 
 		TableTopImpl test = new TableTopImpl();
 		test.prepareTable();
 
 	}
-
 }

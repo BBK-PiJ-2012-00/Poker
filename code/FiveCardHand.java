@@ -14,6 +14,8 @@ public class FiveCardHand implements Hand {
 	private String handValue; 
 	private int handValueScore; //The numerical score associated with a hand
 	int processingValue = 0; //For use evaluating which cards to keep when discarding from dealer's hand
+	int pairValue; // The rank value of Four of a Kind, Three of a Kind and Pairs are stored here for easy comparison
+				   // in the even that the two players have a hand of the same type
 	
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
@@ -72,6 +74,7 @@ public class FiveCardHand implements Hand {
 			handValue = "Four of a Kind";
 			processingValue = 5;
 			handValueScore = 7;
+			pairValue = handContents[0].getRankValue(); //Takes value of first card that forms Four of a Kind for comparison
 			return; //Don't test any further once a handValue is found
 		}
 		
@@ -87,6 +90,7 @@ public class FiveCardHand implements Hand {
 			handValue = "Four of a Kind";
 			processingValue = 5;
 			handValueScore = 7;
+			pairValue = handContents[4].getRankValue();//Takes value of the last card that forms Four of a Kind for comparison
 			return; //Don't test for any other handValues if Four of a Kind is found
 		}
 		
@@ -139,7 +143,7 @@ public class FiveCardHand implements Hand {
 		
 		//Test for three of a kind
 		boolean threeOfAKind = true;
-		for (int i = 0; i < 2; i++) { //Test first three cards
+		for (int i = 0; i < 2; i++) { //Test first three cards (TTTXX)
 			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
 				threeOfAKind = false;
 				break;
@@ -149,11 +153,12 @@ public class FiveCardHand implements Hand {
 			handValue = "Three of a Kind";
 			processingValue = 1;
 			handValueScore = 4;
+			pairValue = handContents[0].getRankValue();
 			return;
 		}
 		
 		threeOfAKind = true; //Must be reset here for the next test
-		for (int i = 1; i < 3; i++) { //Test middle three cards
+		for (int i = 1; i < 3; i++) { //Test middle three cards (XTTTX)
 			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
 				threeOfAKind = false;
 				break;
@@ -163,11 +168,12 @@ public class FiveCardHand implements Hand {
 			handValue = "Three of a Kind";
 			processingValue = 2;
 			handValueScore = 4;
+			pairValue = handContents[1].getRankValue();
 			return;
 		}
 		
 		threeOfAKind = true; //Must be reset here for the last test
-		for (int i = 2; i < 4; i++) { //Test last three cards
+		for (int i = 2; i < 4; i++) { //Test last three cards (XXTTT)
 			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
 				threeOfAKind = false;
 				break;
@@ -177,6 +183,7 @@ public class FiveCardHand implements Hand {
 			handValue = "Three of a Kind";
 			processingValue = 3;
 			handValueScore = 4;
+			pairValue = handContents[2].getRankValue();
 			return;
 		}
 		
@@ -187,12 +194,17 @@ public class FiveCardHand implements Hand {
 			onePair = true;
 			processingValue = 1;
 			handValueScore = 2;
+			pairValue = handContents[0].getRankValue();
 			handValue = "One Pair";
 			
 			if (handContents[2].getRankValue() == handContents[3].getRankValue()) { // This would mean two consecutive pairs at the front end of hand
 				handValue = "Two Pair";												// PPPPX
 				processingValue = 1;
 				handValueScore = 3;
+				if (handContents[2].getRankValue() > pairValue) {
+					pairValue = handContents[2].getRankValue(); //For Two Pair, take the higher pair value
+				}
+				
 				return; //Don't test any further
 			}
 			
@@ -200,6 +212,10 @@ public class FiveCardHand implements Hand {
 				handValue = "Two Pair";
 				processingValue = 2;
 				handValueScore = 3;
+				if (handContents[3].getRankValue() > pairValue) {
+					pairValue = handContents[3].getRankValue(); //For Two Pair, take the higher pair value
+				}
+				
 				return; //Don't test any further
 			}
 			else if (onePair) {
@@ -213,11 +229,16 @@ public class FiveCardHand implements Hand {
 			handValue = "One Pair";
 			processingValue = 2;
 			handValueScore = 2;
+			pairValue = handContents[1].getRankValue();
 			
 			if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //Checks for XPPPP
 				handValue = "Two Pair";
 				processingValue = 3;
 				handValueScore = 3;
+				if (handContents[3].getRankValue() > pairValue) {
+					pairValue = handContents[3].getRankValue(); //For Two Pair, take the higher pair value
+				}
+				
 				return; // Don't test any further
 			}
 			else if (onePair) {
@@ -231,6 +252,7 @@ public class FiveCardHand implements Hand {
 			handValue = "One Pair";
 			processingValue = 3;
 			handValueScore = 2;
+			pairValue = handContents[2].getRankValue();
 			return; //Don't test any further
 		}
 		
@@ -240,6 +262,7 @@ public class FiveCardHand implements Hand {
 			handValue = "One Pair";
 			processingValue = 4;
 			handValueScore = 2;
+			pairValue = handContents[3].getRankValue();
 			return; //Don't test any further
 		}		
 		
