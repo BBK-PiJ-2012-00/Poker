@@ -11,14 +11,13 @@ import java.util.Arrays;
  *
  */
 public class FiveCardHand implements Hand {
-	private String handValue; //Should hand values be enums? 
+	private String handValue; 
+	private int handValueScore; //The numerical score associated with a hand
 	int processingValue = 0; //For use evaluating which cards to keep when discarding from dealer's hand
 	
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
-	private int availableIndex = 0;
-	
-	private IllegalArgumentException illegalArgEx = new IllegalArgumentException();
+
 	private ArrayIndexOutOfBoundsException boundsEx = new ArrayIndexOutOfBoundsException();
 	
 	
@@ -31,13 +30,12 @@ public class FiveCardHand implements Hand {
 	@Override
 	public void addCard(Card c) {
 		try {
-			if (availableIndex < 5) {
-				handContents[availableIndex] = c;
-				availableIndex++;
+			for(int i = 0; i < 5; i++) {
+                if(handContents[i] == null){
+                    handContents[i] = c;
+                    break;
+                }
 			}
-			else {
-				throw boundsEx;
-			}						
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("(!) Attempting to add more cards to a hand than is allowed.");
@@ -141,6 +139,7 @@ public class FiveCardHand implements Hand {
 			return;
 		}
 		
+		threeOfAKind = true; //Must be reset here for the next test
 		for (int i = 1; i < 3; i++) { //Test middle three cards
 			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
 				threeOfAKind = false;
@@ -153,6 +152,7 @@ public class FiveCardHand implements Hand {
 			return;
 		}
 		
+		threeOfAKind = true; //Must be reset here for the last test
 		for (int i = 2; i < 4; i++) { //Test last three cards
 			if (handContents[i].getRankValue() != handContents[i+1].getRankValue()) {
 				threeOfAKind = false;
@@ -205,6 +205,12 @@ public class FiveCardHand implements Hand {
 			handDisplay += (i+1) + ": " + handContents[i].toString() + "\n";
 		}
 		return handDisplay;
+	}
+
+
+	@Override
+	public int getHandValueScore() {
+		return handValueScore;
 	}
 
 }

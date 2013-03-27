@@ -50,6 +50,15 @@ public interface Hand {
 	 */
 	public String getHandValue();
 	
+	
+	/**
+	 * Retrieves the handValueScore field, which associates a numerical score
+	 * with a hand value (for ease of hand comparison).
+	 * 
+	 * @return int the numerical score associated with a handValue
+	 */
+	public int getHandValueScore();
+	
 	/**
 	 * Returns an integer for use if the program-controlled dealer has a handValue
 	 * of Three of a Kind, Two Pair, and One Pair; this allows for decisions about which cards to throw away
