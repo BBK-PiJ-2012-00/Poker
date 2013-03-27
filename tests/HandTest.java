@@ -735,5 +735,30 @@ public class HandTest {
 		assertTrue(output < 0);	//A negative value should be returned because a flush is less than four of a kind	
 		
 	}
+	
+	@Test
+	public void testHandComparison2() { //Test four of a kind vs four of a kind (equality)
+		Hand quads = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			quads.addCard(c);
+		}
+		Card c = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		quads.addCard(c);
+		quads.evaluateHand();
+		
+		Hand quads2 = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card d = new CardImpl(Rank.SEVEN, Suit.values()[i]);
+			quads2.addCard(d);
+		}
+		Card e = new CardImpl(Rank.TWO, Suit.HEARTS);
+		quads2.addCard(e);
+		quads2.evaluateHand();
+		
+		//Test that 0 is returned; 0 means equality
+		int output = quads.compareTo(quads2);
+		assertTrue(output == 0);		
+	}
 
 }
