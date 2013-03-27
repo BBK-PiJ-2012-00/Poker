@@ -319,4 +319,11 @@ public class FiveCardHand implements Hand {
 		//0: this object is equal to hand
 	}
 
+
+	
+	@Override
+	public int getPairValue() {
+		return pairValue;
+	}
+
 }

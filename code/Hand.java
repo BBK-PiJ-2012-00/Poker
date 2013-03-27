@@ -71,6 +71,15 @@ public interface Hand extends Comparable<Hand> {
 	public int getProcessingValue();
 	
 	/**
+	 * Accesses the pairValue field, for use when comparing two hands that are the same;
+	 * i.e. if both players have Three of a Kind, it will pick the higher one.
+	 * 
+	 * @return int the value of pairValue.
+	 */
+	public int getPairValue();
+	
+	
+	/**
 	 * Prints hand on screen for the player to view.
 	 */
 	public String displayHand();
