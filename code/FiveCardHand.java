@@ -17,8 +17,6 @@ public class FiveCardHand implements Hand {
 	
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
-
-	private ArrayIndexOutOfBoundsException boundsEx = new ArrayIndexOutOfBoundsException();
 	
 	
 	@Override
@@ -169,22 +167,68 @@ public class FiveCardHand implements Hand {
 			return;
 		}
 		
-		//Test for Two Pair
-		//boolean twoPair = true;
-		//for (int i = 0; i < 2; i++) {
+		//Test for Pairs
+		boolean onePair = false;
+		boolean twoPair = false;
+		//The following tests for a pair in the first position (PPXXX), potentially followed by another pair
+		if (handContents[0].getRankValue() == handContents[1].getRankValue()) {
+			onePair = true;
+			processingValue = 1;
+			handValue = "One Pair";
+			
+			if (handContents[2].getRankValue() == handContents[3].getRankValue()) { // This would mean two consecutive pairs at the front end of hand
+				twoPair = true;														// PPPPX
+				handValue = "Two Pair";
+				processingValue = 1;
+				return; //Don't test any further
+			}
+			
+			else if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //This means PPXPP formation
+				twoPair = true;
+				handValue = "Two Pair";
+				processingValue = 2;
+				return; //Don't test any further
+			}
+			else if (onePair) {
+				return; // Hand is PPXXX
+			}				
+		}
 		
+		//The following tests for a pair in the second position (XPPXX), potentially followed by another pair (XPPPP)
+		if (handContents[1].getRankValue() == handContents[2].getRankValue()) {
+			onePair = true;
+			handValue = "One Pair";
+			processingValue = 2;
+			
+			if (handContents[3].getRankValue() == handContents[4].getRankValue()) { //Checks for XPPPP
+				twoPair = true;
+				handValue = "Two Pair";
+				processingValue = 3;
+				return; // Don't test any further
+			}
+			else if (onePair) {
+				return; //Hand is XPPXX
+			}
+		}
 		
+		//The following tests for a pair in the third position (XXPPX)
+		if (handContents[2].getRankValue() == handContents[3].getRankValue()) {
+			onePair = true;
+			handValue = "One Pair";
+			processingValue = 3;
+			return; //Don't test any further
+		}
 		
-		//Test for One Pair
+		//The following tests for a pair in the last position (XXXPP)
+		if (handContents[3].getRankValue() == handContents[4].getRankValue()) {
+			onePair = true;
+			handValue = "One Pair";
+			processingValue = 4;
+			return; //Don't test any further
+		}		
 		
 		//If no better hand is found, the player has:
 		handValue = handContents[4].toString() + " High";
-		processingValue = 0; //For dealer's decision making benefit; 0 means no made hand
-		
-			
-		
-		
-		
 		
 	}
 
