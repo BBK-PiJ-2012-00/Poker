@@ -231,6 +231,50 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 	}
 	
+	@Test
+	public void testThreeOfAKindMiddleThree() {
+		Hand testHand = new FiveCardHand();
+		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		for (int i = 1; i < 4; i++) {
+			Card c = new CardImpl(Rank.FOUR, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+			
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Three of a Kind";
+		assertEquals(expectedValue, outputValue);
+		
+	}
 	
+	@Test
+	public void testThreeOfAKindLastThree() {
+		Hand testHand = new FiveCardHand();
+		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		Card second = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(second);
+		
+		for (int i = 2; i < 5; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i-1]);
+			testHand.addCard(c);
+		}	
+		
+		testHand.evaluateHand();		
+		System.out.println(testHand.displayHand());
+		String outputValue = testHand.getHandValue();
+		String expectedValue = "Three of a Kind";
+		assertEquals(expectedValue, outputValue);
+		
+	}
+	
+	//Write tests to check that processingValue is set correctly from Three of a Kind downwards
 
 }
