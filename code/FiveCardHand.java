@@ -252,7 +252,6 @@ public class FiveCardHand implements Hand {
 
 	@Override
 	public String getHandValue() {
-		System.out.println(handValue); //For testing purposes (PENDING REMOVAL)
 		return handValue;
 	}
 	

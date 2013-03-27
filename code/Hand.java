@@ -39,7 +39,8 @@ public interface Hand extends Comparable<Hand> {
 	
 	/**
 	 * Evaluates the value of a hand; whether it is a Flush, Straight etc, 
-	 * or nothing.  Sets the handValue field of Hand to hold this value.
+	 * or nothing.  Sets the handValue field of Hand to hold this value. It sorts 
+	 * before evaluating.
 	 */
 	public void evaluateHand();
 	
