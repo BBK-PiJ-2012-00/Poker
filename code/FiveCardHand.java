@@ -70,6 +70,7 @@ public class FiveCardHand implements Hand {
 		}
 		if (fourOfAKind) {
 			handValue = "Four of a Kind";
+			processingValue = 5;
 			return; //Don't test any further once a handValue is found
 		}
 		
@@ -83,6 +84,7 @@ public class FiveCardHand implements Hand {
 		
 		if (fourOfAKind) {
 			handValue = "Four of a Kind";
+			processingValue = 5;
 			return; //Don't test for any other handValues if Four of a Kind is found
 		}
 		
@@ -96,6 +98,7 @@ public class FiveCardHand implements Hand {
 		}
 		if (flush) {
 			handValue = "Flush";
+			processingValue = 5;
 			return; //Don't test for any other handValues if a Flush is found
 		}
 		
@@ -111,6 +114,7 @@ public class FiveCardHand implements Hand {
 			}
 			if (straight) {
 				handValue = "Straight";
+				processingValue = 5;
 				return;
 			}			
 		
@@ -124,6 +128,7 @@ public class FiveCardHand implements Hand {
 		}
 		if (straight) {
 			handValue = "Straight";
+			processingValue = 5;
 			return;
 		}
 		
