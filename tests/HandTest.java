@@ -760,5 +760,30 @@ public class HandTest {
 		int output = quads.compareTo(quads2);
 		assertTrue(output == 0);		
 	}
-
+	
+	@Test
+	public void testHandComparison3() { //Test flush vs straight
+		Hand flush = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			flush.addCard(c);
+		}
+		flush.evaluateHand();
+		
+		Hand straight = new FiveCardHand();
+		for (int i = 7; i < 11; i++) { //for a standard straight (i.e. ace isn't low) 
+			Card c = new CardImpl(Rank.values()[i], Suit.CLUBS);
+			straight.addCard(c);
+		}	
+		Card king = new CardImpl(Rank.KING, Suit.SPADES);
+		straight.addCard(king);
+		
+		//Assert that straight is less than flush
+		int output = straight.compareTo(flush);
+		assertTrue(output < 0); //Negative values means object that invoked compareTo is less than parameter object
+	}
+	
 }
+	
+	//straight vs three of a kind
+	//two pair vs one pair
