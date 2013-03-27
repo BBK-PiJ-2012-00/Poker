@@ -98,7 +98,7 @@ public class TableTopImpl implements TableTop {
                  * At this point whilst 'cardsToBin' is still positive, discardCard is called and passed the integer entered by the user. 
                  * The hand is not resorted during this process so that the numbers of the cards does not change during the discard.
                  */
-                int cardDis;
+                int cardDis = 0;
                 while(cardsToBin > 0) {                    
 	                cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
 	                if(cardDis > 0 && cardDis < 6) {
