@@ -709,5 +709,31 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 		
 	}
+	
+	//TEST HAND SCORES HERE FIRST
+	
+	@Test
+	public void testHandComparison() { //Test flush vs four of a kind
+		Hand flush = new FiveCardHand();
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS);
+			flush.addCard(c);
+		}
+		flush.evaluateHand();
+		
+		Hand quads = new FiveCardHand();
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			quads.addCard(c);
+		}
+		Card c = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		quads.addCard(c);
+		quads.evaluateHand();
+		
+		//Test that four of a kind is greater than a flush
+		int output = flush.compareTo(quads);
+		assertTrue(output < 0);	//A negative value should be returned because a flush is less than four of a kind	
+		
+	}
 
 }
