@@ -212,7 +212,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testThreeOfAKindFirstThree() { //Tests for three of a kind in first position
+	public void testThreeOfAKindFirstThree() { //Tests for three of a kind in first position (TTTXX)
 		Hand testHand = new FiveCardHand();
 		Card first = new CardImpl(Rank.TWO, Suit.CLUBS);
 		testHand.addCard(first);
@@ -232,7 +232,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testThreeOfAKindMiddleThree() {
+	public void testThreeOfAKindMiddleThree() { //XTTTX
 		Hand testHand = new FiveCardHand();
 		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
 		testHand.addCard(first);
@@ -254,7 +254,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testThreeOfAKindLastThree() {
+	public void testThreeOfAKindLastThree() { //XXTTT
 		Hand testHand = new FiveCardHand();
 		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
 		testHand.addCard(first);
@@ -687,6 +687,27 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 		
 	}
-	//Write tests to check that processingValue is set correctly from Three of a Kind downwards
+	
+	@Test
+	public void testEvaluateHandBorderline() { // Test that Three of a Kind is picked over One Pair
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 3; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+				
+		Card fourth = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(fourth);
+		
+		Card fifth = new CardImpl(Rank.SEVEN, Suit.SPADES);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		String expectedValue = "Three of a Kind";
+		String outputValue = testHand.getHandValue();
+		assertEquals(expectedValue, outputValue);
+		
+	}
 
 }
