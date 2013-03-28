@@ -5,6 +5,7 @@ package code;
 
 /**
  * @author Anna Taylor
+ * @author Greg Marshall
  *
  */
 public interface Hand extends Comparable<Hand> {

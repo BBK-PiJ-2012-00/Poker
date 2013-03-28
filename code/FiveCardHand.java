@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 /**
  * @author Anna Taylor
+ * @author Greg Marshall
  *
  */
 public class FiveCardHand implements Hand {

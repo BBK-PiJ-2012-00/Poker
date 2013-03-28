@@ -19,6 +19,9 @@ public class TableTopImpl implements TableTop {
 	public void prepareTable() { // creates human and dealer players and takes user's name
 
 		String userName = JOptionPane.showInputDialog("Please enter your name: ");
+		if (userName == null) { //In the event that the user clicks 'cancel'
+			userName = "Player";
+		}
 		humanPlayer = new HumanPlayer(userName);
 		dealerPlayer = new DealerPlayer();
                 System.out.println("**************************************************************************************");
@@ -29,7 +32,7 @@ public class TableTopImpl implements TableTop {
                 System.out.println("");
                 System.out.println("");
                 pause();
-                System.out.println("Hi "+userName+". Hope you're ready to get the cards in the air! Please wait....");
+                System.out.println("Hi " + userName + ". Hope you're ready to get the cards in the air! Please wait....");
                 pause();
                 commenceGame();
 	}
@@ -59,26 +62,31 @@ public class TableTopImpl implements TableTop {
           
         }
         
+        
         public void mainGameCycle(){
             boolean finished = false;
-            while(!finished){
-                deck = new DeckImpl(); // a new deck object is created at the start of each hand and shuffled
+            while(!finished){  // main cycle runs on a loop until player opts to quit (below)
+                
+            	deck = new DeckImpl(); // a new deck object is created at the start of each hand and shuffled
                 clearHands(); // clears both hands of cards so they're ready for the new game
                 deck.shuffleCards();
                 dealCards();
+                
                 System.out.println("***********************************************************");
                 System.out.println("Ok let's shuffle up and deal!");
-                pause();
+                pause();                
                 System.out.println("shuffling deck....");
                 pause();
                 System.out.println("dealing cards....");
                 pause();
+                
                 System.out.println("Your hand is: ");
                 humanPlayer.getHand().evaluateHand();
                 System.out.println(humanPlayer.getHand().displayHand());
                 System.out.println("You have: " + humanPlayer.getHand().getHandValue());
                 pause();
                 pause();
+                
                 discardAndReplace(); // discard and replace duties pulled out to another method
                 pause();
                 System.out.println("Your final 5-card hand is: ");
@@ -88,7 +96,8 @@ public class TableTopImpl implements TableTop {
                 pause();
                 System.out.println("Finished player discard....computer is thinking");
                 pause();
-                dealerTurn();
+                
+                dealerTurn(); //Initiates the program-controlled dealer's turn
                 System.out.println("****SHOWDOWN!!**** ");
                 pause();
                 System.out.println(dealerPlayer.getHand().displayHand());
@@ -97,10 +106,14 @@ public class TableTopImpl implements TableTop {
                 System.out.println("Your hand is: " + humanPlayer.getHand().getHandValue());
                 pause();
                 pause();
-                compareHands();
-                pause();
-                String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
                 
+                compareHands(); //Compares the hands of both players
+                pause();
+                
+                String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
+                if (cont == null) {
+                	cont = "N"; //N is assumed if the user clicks cancel
+                }
                 if (cont.contains("N")|| cont.equals("n")) {
                     finished = true;
                     System.out.append("Thanks for playing!");
@@ -110,37 +123,53 @@ public class TableTopImpl implements TableTop {
                 }
             }
         }
-        public void dealCards() {
+        
+        
+        public void dealCards() { //Deals cards into the players' hands
             for(int i = 0; i < 5; i++) {
                     humanPlayer.receiveCard(deck.popCard());
                     dealerPlayer.receiveCard(deck.popCard());
                 }
         }
-        public void discardAndReplace(){
+        
+        
+        public void discardAndReplace() { //Allows user to exchange cards
             String x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
-                int cardsToBin = Integer.parseInt(x);
+            if (x == null) {
+            	x = "0"; //Default value if user clicks cancel
+            }
+            
+            int cardsToBin = Integer.parseInt(x);
 
-                while(cardsToBin > 3 || cardsToBin < 0) {
-                    System.out.println("You may only enter 0-3 cards to discard, please try again: ");
-                    x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
-                    cardsToBin = Integer.parseInt(x);
-                }
+            while(cardsToBin > 3 || cardsToBin < 0) {
+                System.out.println("You may only enter 0-3 cards to discard, please try again: ");
+                x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
+                cardsToBin = Integer.parseInt(x);
+            }
+            
             /**
-                 * At this point whilst 'cardsToBin' is still positive, discardCard is called and passed the integer entered by the user. 
-                 * The hand is not resorted during this process so that the numbers of the cards does not change during the discard.
-                 */
-                int cardDis = 0;
-                int cardsToReplace = cardsToBin;
-                while(cardsToBin > 0) {                    
-	                cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
-	                if(cardDis > 0 && cardDis < 6) {
-	                    humanPlayer.getHand().discardCard(cardDis);
-	                    cardsToBin--;
-	                }
-	                else {
-	                    System.out.println("You may only enter 1,2,3,4 or 5");
-	                }
-	        }
+             * At this point whilst 'cardsToBin' is still positive, discardCard is called and passed the integer entered by the user. 
+             * The hand is not resorted during this process so that the numbers of the cards does not change during the discard.
+             */
+            int cardDis = 0;
+            int cardsToReplace = cardsToBin;
+            while(cardsToBin > 0) {                    
+                try {
+                	cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
+                }
+                catch (NumberFormatException numEx) { //If user clicks cancel, default is 0
+                	cardDis = 0;
+                	break;
+                }
+                if(cardDis > 0 && cardDis < 6) {
+                    humanPlayer.getHand().discardCard(cardDis);
+                    cardsToBin--;
+                }
+                else {
+                    System.out.println("You may only enter 1,2,3,4 or 5");
+                }
+            }
+            
 	        for (int i = cardsToReplace; i > 0;i--) {
 	                humanPlayer.receiveCard(deck.popCard());
 	        }
@@ -148,6 +177,8 @@ public class TableTopImpl implements TableTop {
                 	System.out.println("dealing your replacement cards......");
                 }
         }
+        
+        
         public void dealerTurn(){
             int dealerReplace = dealerPlayer.chooseDiscard();  //the dealer's automated discard decision begins
                 for(int i = dealerReplace;i > 0;i--) {
@@ -159,19 +190,25 @@ public class TableTopImpl implements TableTop {
                 System.out.println(dealerPlayer.getName() + " has finished changing cards....and has: ");
                 pause();
         }
-        public void clearHands(){
+        
+        
+        public void clearHands(){ //For use at the end of each game cycle
             
                 humanPlayer.getHand().clearHand();
                 dealerPlayer.getHand().clearHand();
         }
+        
+        
         public void compareHands() {
             int comparison = humanPlayer.getHand().compareTo(dealerPlayer.getHand()); //this section compares hands at showdown
                 if(comparison > 0) {                                                    //if this value is positive
                     System.out.println("Congratulations! You have won the hand!");      //the first hand is higher in value
                 }
+                
                 else if(comparison < 0) {                                               // negative indicates a lower value
                     System.out.println("The computer has won the hand! Better luck next time!");
                 }
+                
                 else if(comparison == 0) { //if the comparison or rank is equal, the hand needs to be compared further
                     if(humanPlayer.getHand().getHandValueScore() == 7) { //represents quads by score
                         if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
@@ -218,27 +255,31 @@ public class TableTopImpl implements TableTop {
                         }
                     }
                     else {
-                        standardHandComparison();
+                        standardHandComparison(); 
                     }
                 }
         }
+        
+        
         public void standardHandComparison() {  //this method is for comparing hands that have equal rank value and cannot be distinguished by pair valuing.
-                for(int i = 4; i >= 0 ; i--) {
-                            int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();
-                            int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();
-                            if(humanDraw > compDraw) {
-                                System.out.println("Congratulations! You have won the hand with the best high card.");
-                                break;
-                            }
-                            else if(compDraw < humanDraw) {
-                                System.out.println("The computer has won the hand with the best high card! Better luck next time!");
-                                break;
-                            }
-                            if(i == 0 && compDraw == humanDraw) {
-                                System.out.println("The hand is a draw! Please play again.");
-                            }      
-                        }
-    }
+            for(int i = 4; i >= 0 ; i--) {
+                int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();
+                int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();
+                if(humanDraw > compDraw) {
+                    System.out.println("Congratulations! You have won the hand with the best high card.");
+                    break;
+                }
+                else if(compDraw < humanDraw) {
+                    System.out.println("The computer has won the hand with the best high card! Better luck next time!");
+                    break;
+                }
+                if(i == 0 && compDraw == humanDraw) {
+                    System.out.println("The hand is a draw! Please play again.");
+                }      
+            }
+        }
+        
+        
 	public static void main(String[] args) {
 
 		TableTopImpl test = new TableTopImpl();
