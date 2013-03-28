@@ -90,6 +90,7 @@ public class HandTest {
 		
 	}
 	
+	
 	@Test
 	public void testEvaluateFourOfAKind() {//Tests for first four cards being four of a kind
 		Hand testHand = new FiveCardHand();
@@ -916,12 +917,36 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 	}
 	
+	@Test
+	public void testLowerPairValues() { //Testing both pairValues
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		int outputValue = testHand.getLowerPairValue();
+		int expectedValue = 2;
+		assertEquals(expectedValue, outputValue);
+	}
+	
 	
 	
 }
 	
 	//straight vs three of a kind
 	//two pair vs one pair
-	//TEST HIGH CARD
+	
 //Test more pairValue
 //Test lowerPairVaule
