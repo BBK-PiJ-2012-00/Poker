@@ -13,10 +13,10 @@ public class TableTopImpl implements TableTop {
 	private Player humanPlayer;
 	private Player dealerPlayer; 
 	private Deck deck;
-    //String dealerName = "Malcolm";
+   
 
 
-	public void prepareTable() { // creates human and dealer players and takes user's name
+	public void prepareTable() { // creates human and dealer players and takes user's name, and sets off the game
 
 		String userName = JOptionPane.showInputDialog("Please enter your name: ");
 		if (userName == null) { //In the event that the user clicks 'cancel'
@@ -185,7 +185,7 @@ public class TableTopImpl implements TableTop {
                     dealerPlayer.receiveCard(deck.popCard());
                 }
                 dealerPlayer.getHand().evaluateHand();
-                System.out.println(dealerPlayer.getName() + " has discarded " +dealerReplace+" cards");
+                System.out.println(dealerPlayer.getName() + " has discarded " + dealerReplace + " cards");
                 pause();
                 System.out.println(dealerPlayer.getName() + " has finished changing cards....and has: ");
                 pause();
