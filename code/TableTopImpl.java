@@ -7,13 +7,13 @@ import javax.swing.JOptionPane;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class TableTopImpl implements TableTop {
 	private Player humanPlayer;
 	private Player dealerPlayer; 
 	private Deck deck;
-   // String dealerName = "Malcolm";
+    //String dealerName = "Malcolm";
 
 
 	public void prepareTable() { // creates human and dealer players and takes user's name
@@ -52,7 +52,8 @@ public class TableTopImpl implements TableTop {
             pause();
             System.out.println("You're probably going to lose a lot of money!");
             pause();
-            System.out.println("Your dealer today is called " + dealerPlayer.getName() + ". He says hello and good luck.");
+            System.out.println("Your dealer today is called " + dealerPlayer.getName() + ". " + dealerPlayer.getName() + 
+            		" says hello and good luck.");
             pause();
             mainGameCycle();
           
@@ -91,7 +92,7 @@ public class TableTopImpl implements TableTop {
                 System.out.println("****SHOWDOWN!!**** ");
                 pause();
                 System.out.println(dealerPlayer.getHand().displayHand());
-                System.out.println("Malcolm's hand is: " + dealerPlayer.getHand().getHandValue());
+                System.out.println(dealerPlayer.getName() + "'s hand is: " + dealerPlayer.getHand().getHandValue());
                 pause();
                 System.out.println("Your hand is: " + humanPlayer.getHand().getHandValue());
                 pause();
@@ -103,6 +104,9 @@ public class TableTopImpl implements TableTop {
                 if (cont.contains("N")|| cont.equals("n")) {
                     finished = true;
                     System.out.append("Thanks for playing!");
+                }
+                else if (!cont.contains("Y") || !cont.contains("y")) { //If the user enters something other than Y or N
+                	System.out.append("   I'll take that as a yes, then!   ");
                 }
             }
         }
@@ -150,9 +154,9 @@ public class TableTopImpl implements TableTop {
                     dealerPlayer.receiveCard(deck.popCard());
                 }
                 dealerPlayer.getHand().evaluateHand();
-                System.out.println("Malcolm has discarded " +dealerReplace+" cards");
+                System.out.println(dealerPlayer.getName() + " has discarded " +dealerReplace+" cards");
                 pause();
-                System.out.println("Malcolm has finished changing cards....and has: ");
+                System.out.println(dealerPlayer.getName() + " has finished changing cards....and has: ");
                 pause();
         }
         public void clearHands(){
@@ -240,4 +244,5 @@ public class TableTopImpl implements TableTop {
 		TableTopImpl test = new TableTopImpl();
 		test.prepareTable();
 	}
+	
 }

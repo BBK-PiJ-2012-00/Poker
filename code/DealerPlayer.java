@@ -209,6 +209,7 @@ public class DealerPlayer implements Player {
 		return dealerName;
 	}
 	
+	
 	public String dealerPicker() { //Selects a random dealer
 		int dealerRef = (int) (Math.random() * 10); // To generate a random number between 1 and 10
 		
