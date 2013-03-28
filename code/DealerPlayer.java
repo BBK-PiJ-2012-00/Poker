@@ -18,14 +18,17 @@ public class DealerPlayer implements Player {
    }
    
    @Override
-   	public void receiveCard(Card c) {
+   public void receiveCard(Card c) {
    		hand.addCard(c);
-   	}
+   }
+   
    
    @Override
    public Hand getHand() {
        return hand;
    }
+   
+   
    @Override
    public int chooseDiscard() {
         int cardsChanged = 0;
