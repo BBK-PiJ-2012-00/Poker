@@ -32,7 +32,7 @@ public class DealerPlayer implements Player {
         hand.evaluateHand();
         System.out.println("checking for made hand....");
         if (hand.getHandValue() == "Four of a Kind" || hand.getHandValue() == "Straight" || hand.getHandValue() == "Flush") {
-            System.out.println("Malcolm doesn't look like he's discarding any cards!");
+            System.out.println(dealerName + " doesn't seem to be discarding any cards!");
         }
         else if(hand.getHandValue().equals("Three of a Kind")) {  // hand class returns handValue and for three of a kind 
             System.out.println("checking for three of a kind....");
