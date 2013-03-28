@@ -31,9 +31,11 @@ public class DealerPlayer implements Player {
         int cardsChanged = 0;
         hand.evaluateHand();
         System.out.println("checking for made hand....");
+        
         if (hand.getHandValue() == "Four of a Kind" || hand.getHandValue() == "Straight" || hand.getHandValue() == "Flush") {
             System.out.println(dealerName + " doesn't seem to be discarding any cards!");
         }
+        
         else if(hand.getHandValue().equals("Three of a Kind")) {  // hand class returns handValue and for three of a kind 
             System.out.println("checking for three of a kind....");
                 if(hand.getProcessingValue() == 1) {      //will return a 'processing value depending on the location of the trips in the hand
