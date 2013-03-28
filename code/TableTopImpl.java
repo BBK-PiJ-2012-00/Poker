@@ -218,7 +218,7 @@ public class TableTopImpl implements TableTop {
                         System.out.println("The computer has won the hand with the higher quads! Better luck next time!"); //there can only be 1 quad or trip hand of any value
                         }                                                                           //and so the winner is clear
                     }
-                    else if(humanPlayer.getHand().getHandValueScore() == 4){
+                    else if(humanPlayer.getHand().getHandValueScore() == 4){ //represents trips by score
                         if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
                         System.out.println("Congratulations! You have won the hand with the higher trips!");
                         }
@@ -234,7 +234,7 @@ public class TableTopImpl implements TableTop {
                             System.out.println("The computer has won the hand with the higher pair! Better luck next time!");
                         }
                         else {
-                            standardHandComparison(); //equal one pair hands need to call this method to evaluate the rest of the cards in order to establish winner
+                            standardHandComparison(); //equal one pair hands call this method to evaluate the rest of the cards to establish winner
                         }
                     }
                     else if(humanPlayer.getHand().getHandValueScore() == 3) {  //same applies as above for 2 pair hands 
