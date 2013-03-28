@@ -13,8 +13,10 @@ public class DealerPlayer implements Player {
    private Hand hand = new FiveCardHand();
    
    
-   public DealerPlayer(String name) {
+   public DealerPlayer() {
+	   dealerName = this.dealerPicker();
    }
+   
        @Override
    	public void receiveCard(Card c) {
    		hand.addCard(c);
@@ -205,5 +207,14 @@ public class DealerPlayer implements Player {
 	@Override
 	public String getName() {
 		return dealerName;
+	}
+	
+	public String dealerPicker() { //Selects a random dealer
+		int dealerRef = (int) (Math.random() * 10); // To generate a random number between 1 and 10
+		
+		String[] dealerNames = {"Malcolm", "Marlene", "Sven", "Rufus", "Michael", "Victoria", "Tseng", "Frank", "Paul", "Adam" };
+		
+		return dealerNames[dealerRef];		
+		
 	}
 }
