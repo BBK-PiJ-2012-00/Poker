@@ -30,6 +30,9 @@ public class HandComparatorTest {
 	//Extra cards
 	private Card twoD;
 	private Card twoC;
+	private Card fourC;
+	private Card fiveD;
+	private Card sevenS;
 	private Card eightS;
 	private Card kingC;
 	private Card kingH;
@@ -47,6 +50,9 @@ public class HandComparatorTest {
 		twoD = new CardImpl(Rank.TWO, Suit.DIAMONDS);
 		twoC = new CardImpl(Rank.TWO, Suit.CLUBS);
 		threeH = new CardImpl(Rank.THREE, Suit.HEARTS);
+		fourC = new CardImpl(Rank.FOUR, Suit.CLUBS);
+		fiveD = new CardImpl(Rank.FIVE, Suit.DIAMONDS);
+		sevenS = new CardImpl(Rank.SEVEN, Suit.SPADES);
 		eightS = new CardImpl(Rank.EIGHT, Suit.SPADES);
 		kingC = new CardImpl(Rank.KING, Suit.CLUBS);
 		kingH = new CardImpl(Rank.KING, Suit.HEARTS);
@@ -110,13 +116,36 @@ public class HandComparatorTest {
 		assertEquals(expected, output);
 	}
 	
+	@Test
+	public void testHighCardComparison1() { //Tests that player with highest card wins in absence of better hand
+		humanPlayer.receiveCard(kingH); //Human player should win with this card
+		humanPlayer.receiveCard(fourC);
+		humanPlayer.receiveCard(twoD);
+		humanPlayer.receiveCard(eightS);
+		humanPlayer.receiveCard(fiveH);
+		
+		dealerPlayer.receiveCard(queenS);
+		dealerPlayer.receiveCard(twoC);
+		dealerPlayer.receiveCard(threeH);
+		dealerPlayer.receiveCard(fiveD);
+		dealerPlayer.receiveCard(sevenS);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.highCardComparison(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the best high card.";
+		assertEquals(output, expected);
+	}
+	
 	/**
 	 * The following tests compare cases where both players have 'equal' hands (i.e. both have quads, trips, or pairs) 
 	 * and further comparison is needed.
 	 */
 	
 	@Test
-	public void testCompareHandsBothQuadsHumanPlayerWins() { //Tests that if both have quads, HumanPlayer wins with better hand
+	public void testBothQuadsHumanPlayerWins() { //Tests that if both have quads, HumanPlayer wins with better hand
 		for (int i = 0; i < 4; i++) {
 			Card c = new CardImpl(Rank.ACE, Suit.values()[i]); //Creates quads
 			humanPlayer.receiveCard(c);
@@ -140,7 +169,7 @@ public class HandComparatorTest {
 	
 	
 	@Test
-	public void testCompareHandsBothQuadsDealerPlayerWins() { //Tests that if both have quads, DealerPlayer wins with better hand
+	public void testBothQuadsDealerPlayerWins() { //Tests that if both have quads, DealerPlayer wins with better hand
 		for (int i = 0; i < 4; i++) {
 			Card c = new CardImpl(Rank.EIGHT, Suit.values()[i]); //Creates quads
 			humanPlayer.receiveCard(c);
@@ -164,7 +193,7 @@ public class HandComparatorTest {
 	
 	
 	@Test
-	public void testCompareHandsBothTripsHumanPlayerWins() { //Tests that if both have trips, HumanPlayer wins with better hand
+	public void testBothTripsHumanPlayerWins() { //Tests that if both have trips, HumanPlayer wins with better hand
 		for (int i = 0; i < 3; i++) {
 			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]); //Creates trips
 			humanPlayer.receiveCard(c);
@@ -189,7 +218,7 @@ public class HandComparatorTest {
 	}
 	
 	@Test
-	public void testCompareHandsBothTripsDealerPlayerWins() { //Tests that if both have trips, DealerPlayer can win with better hand
+	public void testBothTripsDealerPlayerWins() { //Tests that if both have trips, DealerPlayer can win with better hand
 		for (int i = 0; i < 3; i++) {
 			Card c = new CardImpl(Rank.NINE, Suit.values()[i]); //Creates trips
 			humanPlayer.receiveCard(c);

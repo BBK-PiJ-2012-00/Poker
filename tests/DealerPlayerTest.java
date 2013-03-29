@@ -19,7 +19,7 @@ import code.Suit;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class DealerPlayerTest {
 	private Player testPlayer;
