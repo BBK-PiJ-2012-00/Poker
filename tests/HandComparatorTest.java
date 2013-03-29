@@ -37,7 +37,6 @@ public class HandComparatorTest {
 	private Card fiveH;
 	private Card sevenS;
 	private Card eightS;
-	private Card eightC;
 	private Card kingC;
 	private Card kingH;
 	private Card queenD;
@@ -57,7 +56,6 @@ public class HandComparatorTest {
 		fourH = new CardImpl(Rank.FOUR, Suit.HEARTS);
 		fiveD = new CardImpl(Rank.FIVE, Suit.DIAMONDS);
 		sevenS = new CardImpl(Rank.SEVEN, Suit.SPADES);
-		eightS = new CardImpl(Rank.EIGHT, Suit.SPADES);
 		kingC = new CardImpl(Rank.KING, Suit.CLUBS);
 		kingH = new CardImpl(Rank.KING, Suit.HEARTS);
 		queenD = new CardImpl(Rank.QUEEN, Suit.DIAMONDS);
