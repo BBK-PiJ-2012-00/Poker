@@ -9,16 +9,17 @@ import java.util.LinkedList;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class DeckImpl implements Deck {
 	private List<Card> deckContents = new LinkedList<Card>();
+	
 	
 	public DeckImpl() {
 		this.createCards();
 	}
 	
-	
+	@Override
 	public List<Card> getContents() {
 		return deckContents;
 	}
@@ -39,34 +40,17 @@ public class DeckImpl implements Deck {
 		}		
 	}
 	
+	@Override
 	public Card popCard() {		
 		Card topCard = deckContents.remove(0); //List.remove() shifts the rest of the deck up one index after removal of top item
 		return topCard;
 	}
 	
-	/**
-	 * For visual testing of card creation and shuffling.
-	 */
+	@Override
 	public void printDeck() {
 		for (int i = 0; i < deckContents.size(); i++) {
 			System.out.println(deckContents.get(i).toString());
 		}
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Deck testDeck = new DeckImpl();
-		
-		//testDeck.printDeck();
-		
-		testDeck.shuffleCards();
-		
-		testDeck.printDeck();
-		
-		
-
-	}
-
+	}	
+	
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public interface Deck {
 	

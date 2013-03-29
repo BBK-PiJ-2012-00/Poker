@@ -5,6 +5,7 @@ package code;
 
 /**
  * @author Anna Taylor
+ * @author Greg Marshall
  *
  */
 public class HandComparatorImpl implements HandComparator {
@@ -101,15 +102,17 @@ public class HandComparatorImpl implements HandComparator {
 	@Override
 	public void highCardComparison(Player humanPlayer, Player dealerPlayer) { //To evaluate high card hands
 		for(int i = 4; i >= 0 ; i--) {
-            int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();            
-            int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();           
-            if(humanDraw > compDraw) {
-                result = "Congratulations! You have won the hand with the best high card.";              
+            int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();           
+            int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();             
+            if (humanDraw > compDraw) {
+                result = "Congratulations! You have won the hand with the best high card."; 
+                return;
             }
-            else if(compDraw > humanDraw) {
-                result = "The computer has won the hand with the best high card! Better luck next time!";             
+            else if (compDraw > humanDraw) {
+                result = "The computer has won the hand with the best high card! Better luck next time!";     
+                return;
             }
-            if(i == 0 && compDraw == humanDraw) {
+            if (i == 0 && compDraw == humanDraw) {
                 result = "The hand is a draw! Please play again.";
             }      
         }
