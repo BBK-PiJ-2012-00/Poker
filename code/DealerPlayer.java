@@ -37,6 +37,7 @@ public class DealerPlayer implements Player {
         
         if (hand.getHandValue() == "Four of a Kind" || hand.getHandValue() == "Straight" || hand.getHandValue() == "Flush") {
             System.out.println(dealerName + " doesn't seem to be discarding any cards!");
+            return cardsChanged; //Prevents the above hands from being checked further; no need to change anything
         }
         
         else if(hand.getHandValue().equals("Three of a Kind")) {  // hand class returns handValue and for three of a kind 
@@ -211,7 +212,8 @@ public class DealerPlayer implements Player {
             hand.discardCard(2);
             cardsChanged = 2;
         }
-    return cardsChanged;
+        return cardsChanged;
+       
    }
                 
 
