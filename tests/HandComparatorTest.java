@@ -314,7 +314,7 @@ public class HandComparatorTest {
 		testComparator.compareHands(humanPlayer, dealerPlayer);
 		
 		String output = testComparator.getResult();
-		String expected = "The computer has won the hand with the higher trips! Better luck next time!"; //DealerPlayer should win
+		String expected = "The computer has won the hand with the higher trips! Better luck next time!";//DealerPlayer should win
 		assertEquals(expected, output);
 	}
 	
@@ -369,7 +369,7 @@ public class HandComparatorTest {
 		testComparator.compareHands(humanPlayer, dealerPlayer);
 		
 		String output = testComparator.getResult();
-		String expected = "The computer has won the hand with the higher pair! Better luck next time!"; //DealerPlayer should win
+		String expected = "The computer has won the hand with the higher pair! Better luck next time!";//DealerPlayer should win
 		assertEquals(expected, output);
 	}
 	
@@ -424,7 +424,7 @@ public class HandComparatorTest {
 		testComparator.compareHands(humanPlayer, dealerPlayer);
 	
 		String output = testComparator.getResult();
-		String expected = "The computer has won the hand with the best high card! Better luck next time!"; //DealerPlayer should win
+		String expected = "The computer has won the hand with the best high card! Better luck next time!";//DealerPlayer should win
 		assertEquals(expected, output);
 	}
 	
