@@ -44,7 +44,7 @@ public class FiveCardHand implements Hand {
 
 	@Override
 	public void discardCard(int index) {
-		handContents[index - 1] = null;
+		handContents[index - 1] = null; //Index given via TableTop
 		return;
 	}
 
