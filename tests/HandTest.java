@@ -950,3 +950,6 @@ public class HandTest {
 	
 //Test more pairValue
 //Test lowerPairVaule
+
+//Test array index out of bounds if you try to add more to a hand
+//Instantiate hand in beforeClass
