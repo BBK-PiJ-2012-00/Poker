@@ -5,7 +5,7 @@ package code;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public enum Rank {
 	

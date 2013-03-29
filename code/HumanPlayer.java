@@ -5,7 +5,7 @@ package code;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class HumanPlayer implements Player {
 	private Hand hand = new FiveCardHand();	
