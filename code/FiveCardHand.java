@@ -249,7 +249,11 @@ public class FiveCardHand implements Hand {
 				processingValue = 3;
 				handValueScore = 3;
 				if (handContents[3].getRankValue() > pairValue) {
-					pairValue = handContents[3].getRankValue(); //For Two Pair, take the higher pair value
+					lowerPairValue = pairValue; //Saves the lower pair in case it's required during comparison
+					pairValue = handContents[3].getRankValue(); //For Two Pair, take the higher pair value as pairValue
+				}
+				else {
+					lowerPairValue = handContents[3].getRankValue();
 				}
 				
 				return; // Don't test any further
