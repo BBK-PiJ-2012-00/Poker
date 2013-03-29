@@ -959,7 +959,121 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testPairValueTwoPair() {		
+	public void testPairValueQuadsPosition1() { //QQQQX
+		Card firstCard = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(firstCard);
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		testHand.evaluateHand();
+		
+		int expectedValue = 2;
+		int outputValue = testHand.getPairValue();
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test public void testPairValueQuadsPosition2() { //XQQQQ
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		Card c = new CardImpl(Rank.SEVEN, Suit.HEARTS);
+		testHand.addCard(c);
+		testHand.evaluateHand();
+		
+		int expectedValue = 2;
+		int outputValue = testHand.getPairValue();
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueTripsPosition1() { //TTTXX
+		Card first = new CardImpl(Rank.TWO, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		Card second = new CardImpl(Rank.TWO, Suit.SPADES);
+		testHand.addCard(second);		
+		
+		Card third = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(third);
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SIX, Suit.values()[i]); //Creates trips
+			testHand.addCard(c);
+		}
+		
+		testHand.evaluateHand();
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 2;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueTripsPosition2() { // XTTTX
+		Card first = new CardImpl(Rank.THREE, Suit.CLUBS);
+		testHand.addCard(first);
+		
+		for (int i = 1; i < 4; i++) {
+			Card c = new CardImpl(Rank.FOUR, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+			
+		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 4;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueTripsPosition3() { //XXTTT
+		Card first = new CardImpl(Rank.THREE, Suit.CLUBS); 
+		testHand.addCard(first);
+		
+		Card second = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(second);
+		
+		for (int i = 2; i < 5; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i-1]);
+			testHand.addCard(c);
+		}	
+		
+		testHand.evaluateHand();		
+
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 11;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueTwoPairPosition1() { //PPPPX
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card third = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(third);
+		
+		testHand.evaluateHand();
+	
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 11;
+		assertEquals(expectedValue, outputValue);
+		
+	}
+	
+	@Test
+	public void testPairValueTwoPairPosition2() { //PPXPP	
 		for (int i = 0; i < 2; i++) {
 			Card c = new CardImpl(Rank.TWO, Suit.values()[i]);
 			testHand.addCard(c);
@@ -978,6 +1092,51 @@ public class HandTest {
 		int outputValue = testHand.getPairValue();
 		int expectedValue = 11; //Should be the value of the higher pair
 		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueTwoPairPosition3() { //XPPPP
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.EIGHT, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card first = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(first);
+		
+		testHand.evaluateHand();
+		
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 11;
+		assertEquals(expectedValue, outputValue);
+	}
+	
+	@Test
+	public void testPairValueOnePair() {
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SEVEN, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card first = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(first);
+		
+		Card second = new CardImpl(Rank.THREE, Suit.DIAMONDS);
+		testHand.addCard(second);
+		
+		Card fifth = new CardImpl(Rank.KING, Suit.SPADES);
+		testHand.addCard(fifth);
+		
+		testHand.evaluateHand();
+		int outputValue = testHand.getPairValue();
+		int expectedValue = 7;
+		assertEquals(expectedValue, outputValue);
+		
 	}
 	
 	@Test
@@ -1049,8 +1208,4 @@ public class HandTest {
 	
 }
 	
-	//straight vs three of a kind
-	//two pair vs one pair
 	
-//Test more pairValue
-//Instantiate hand in beforeClass
