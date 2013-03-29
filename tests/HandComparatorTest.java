@@ -43,8 +43,13 @@ public class HandComparatorTest {
 		kingC = new CardImpl(Rank.KING, Suit.CLUBS);
 	}
 
+	/**
+	 * Not necessary to test all combinations of hands because we know from HandTest that different
+	 * hands are compared correctly. What matters is that a better hand for each player selects the
+	 * correct winner/
+	 */
 	@Test
-	public void compareHandsBetterHandWins() { //Tests a better hand wins
+	public void testCompareHandsHumanPlayerWins() { //Tests a better hand wins for the HumanPlayer
 		for (int i = 0; i < 4; i++) {
 			Card c = new CardImpl(Rank.ACE, Suit.values()[i]); //Creates quads
 			humanPlayer.receiveCard(c);
@@ -66,5 +71,33 @@ public class HandComparatorTest {
 		String expected = "Congratulations! You have won the hand!"; //This is the result String if HumanPlayer wins
 		assertEquals(expected, output);		
 	}
+	
+	@Test
+	public void testCompareHandsDealerWins() { //Tests a better hands wins for DealerPlayer
+		for (int i = 0; i < 5; i++) {
+			Card c = new CardImpl(Rank.values()[i], Suit.HEARTS); //Creates a flush
+			dealerPlayer.receiveCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand! Better luck next time!"; //Result String if DealerPlayer wins
+		assertEquals(expected, output);
+	}
+	
+	//Now to test for equal hands
 
 }
