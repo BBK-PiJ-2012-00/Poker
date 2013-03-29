@@ -41,5 +41,12 @@ public interface HandComparator {
 	 * @param Player dealerPlayer the DealerPlayer object passed from TableTop.
 	 */
 	public void highCardComparison(Player humanPlayer, Player dealerPlayer);
+	
+	/**
+	 * Accesses the result statement (who has won).
+	 * 
+	 * @return String result of the comparison.
+	 */
+	public String getResult();
 
 }

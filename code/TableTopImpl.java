@@ -109,6 +109,7 @@ public class TableTopImpl implements TableTop {
                 
                 HandComparator handComparator = new HandComparatorImpl();
                 handComparator.compareHands(humanPlayer, dealerPlayer); //Compares the hands of both players
+                System.out.println(handComparator.getResult()); //Prints the result of the comparison (announces winner)
                 pause();
                 
                 String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
@@ -191,7 +192,7 @@ public class TableTopImpl implements TableTop {
                 System.out.println(dealerPlayer.getName() + " has finished changing cards....and has: ");
                 pause();
         }
-        
+         
         
         public void clearHands(){ //For use at the end of each game cycle
             
