@@ -58,7 +58,13 @@ public class HandComparatorTest {
 		dealerPlayer.receiveCard(eightS);
 		dealerPlayer.receiveCard(kingC);
 		
-		//humanPlayer should win
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();		
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand!"; //This is the result String if HumanPlayer wins
+		assertEquals(expected, output);		
 	}
 
 }
