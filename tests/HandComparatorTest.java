@@ -30,16 +30,19 @@ public class HandComparatorTest {
 	//Extra cards
 	private Card twoD;
 	private Card twoC;
+	private Card threeH;
 	private Card fourC;
+	private Card fourH;
 	private Card fiveD;
+	private Card fiveH;
 	private Card sevenS;
 	private Card eightS;
+	private Card eightC;
 	private Card kingC;
 	private Card kingH;
 	private Card queenD;
 	private Card queenS;
-	private Card threeH;
-	private Card fiveH;
+	
 	
 	@Before
 	public void setUp() {
@@ -51,6 +54,7 @@ public class HandComparatorTest {
 		twoC = new CardImpl(Rank.TWO, Suit.CLUBS);
 		threeH = new CardImpl(Rank.THREE, Suit.HEARTS);
 		fourC = new CardImpl(Rank.FOUR, Suit.CLUBS);
+		fourH = new CardImpl(Rank.FOUR, Suit.HEARTS);
 		fiveD = new CardImpl(Rank.FIVE, Suit.DIAMONDS);
 		sevenS = new CardImpl(Rank.SEVEN, Suit.SPADES);
 		eightS = new CardImpl(Rank.EIGHT, Suit.SPADES);
@@ -138,6 +142,55 @@ public class HandComparatorTest {
 		String expected = "Congratulations! You have won the hand with the best high card.";
 		assertEquals(output, expected);
 	}
+	
+	@Test
+	public void testHighCardComparison2() { //Tests that player with highest card wins in absence of better hand
+		humanPlayer.receiveCard(kingH); 
+		humanPlayer.receiveCard(fourC);
+		humanPlayer.receiveCard(twoD);
+		humanPlayer.receiveCard(eightS);
+		humanPlayer.receiveCard(fiveH);
+		
+		dealerPlayer.receiveCard(kingC); // Both highest cards are same rank
+		dealerPlayer.receiveCard(queenS); //Dealer player should win with this card
+		dealerPlayer.receiveCard(threeH);
+		dealerPlayer.receiveCard(fiveD);
+		dealerPlayer.receiveCard(sevenS);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.highCardComparison(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand with the best high card! Better luck next time!";
+		assertEquals(output, expected);
+	}
+	
+	@Test
+	public void testHighCardComparison3() { //Tests that player with highest card wins in absence of better hand
+		humanPlayer.receiveCard(kingH); 
+		humanPlayer.receiveCard(queenD);
+		humanPlayer.receiveCard(fiveD);
+		humanPlayer.receiveCard(fourH);
+		humanPlayer.receiveCard(threeH); //HumanPlayer should win based on this card (higher than twoC)
+		
+		dealerPlayer.receiveCard(kingC); // All higher cards are same rank
+		dealerPlayer.receiveCard(queenS); 
+		dealerPlayer.receiveCard(fiveH);
+		dealerPlayer.receiveCard(fourC);
+		dealerPlayer.receiveCard(twoC);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.highCardComparison(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the best high card.";
+		assertEquals(output, expected);
+	}
+	
+	
+	//Test HC is reached when going through compareHands(), as it will do normally
 	
 	/**
 	 * The following tests compare cases where both players have 'equal' hands (i.e. both have quads, trips, or pairs) 
