@@ -894,7 +894,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testLowerPairValue() {
+	public void testLowerPairValuePosition1() { //PPPPX
 		Hand testHand = new FiveCardHand();
 		
 		for (int i = 0; i < 2; i++) {
@@ -903,11 +903,11 @@ public class HandTest {
 		}
 		
 		for (int i = 0; i < 2; i++) {
-			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			Card c = new CardImpl(Rank.EIGHT, Suit.values()[i]);
 			testHand.addCard(c);
 		}
 		
-		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		Card fifth = new CardImpl(Rank.JACK, Suit.DIAMONDS);
 		testHand.addCard(fifth);
 		
 		testHand.evaluateHand();
@@ -918,7 +918,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testLowerPairValues() { //Testing both pairValues
+	public void testLowerPairValuePosition2() { //PPXPP 
 		Hand testHand = new FiveCardHand();
 		
 		for (int i = 0; i < 2; i++) {
@@ -931,8 +931,8 @@ public class HandTest {
 			testHand.addCard(c);
 		}
 		
-		Card fifth = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
-		testHand.addCard(fifth);
+		Card third = new CardImpl(Rank.EIGHT, Suit.DIAMONDS);
+		testHand.addCard(third);
 		
 		testHand.evaluateHand();
 		System.out.println(testHand.displayHand());
@@ -941,6 +941,29 @@ public class HandTest {
 		assertEquals(expectedValue, outputValue);
 	}
 	
+	@Test
+	public void testLowerPairValuePosition3() { //XPPPP
+		Hand testHand = new FiveCardHand();
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.EIGHT, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			testHand.addCard(c);
+		}
+		
+		Card first = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		testHand.addCard(first);
+		
+		testHand.evaluateHand();
+		System.out.println(testHand.displayHand());
+		int outputValue = testHand.getLowerPairValue();
+		int expectedValue = 8;
+		assertEquals(expectedValue, outputValue);
+	}
 	
 	
 }
@@ -949,7 +972,7 @@ public class HandTest {
 	//two pair vs one pair
 	
 //Test more pairValue
-//Test lowerPairVaule
+
 
 //Test array index out of bounds if you try to add more to a hand
 //Instantiate hand in beforeClass
