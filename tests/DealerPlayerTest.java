@@ -34,7 +34,6 @@ public class DealerPlayerTest {
 		for (int i = 0; i < 1000; i++) { //Test plenty of times to be sure
 			int dealerRef = (int) (Math.random() * 10); //This is the exact code used in the method (not externally accessible)
 			assertTrue(dealerRef >= 0 && dealerRef < 10);
-			System.out.println(dealerRef);
 		}		
 	}
 	
@@ -67,62 +66,76 @@ public class DealerPlayerTest {
         assertTrue(output instanceof Hand);
     }
 
-    /**
-     * Test of chooseDiscard method, of class DealerPlayer.
-     */
+    
+    //The value of cardsChanged will be useful here; check that it's 0 for quads/straight/flush
     @Test
-    public void testChooseDiscard() {  // this tests that correct number of cards are discarded depending on the hand
-        System.out.println("Testing chooseDiscard"); // and that the positions the cards should have been removed from
-        Player instance = new DealerPlayer(); //no longer contain those cards
-        Card aceH = new CardImpl(Rank.ACE, Suit.HEARTS);
-        Card aceS = new CardImpl(Rank.ACE, Suit.SPADES);
-        Card jackS = new CardImpl(Rank.JACK, Suit.SPADES);
-        Card nineC = new CardImpl(Rank.NINE, Suit.CLUBS);
-        Card twoD = new CardImpl(Rank.TWO, Suit.DIAMONDS);
-        instance.receiveCard(aceS);
-        instance.receiveCard(aceH);
-        instance.receiveCard(jackS);
-        instance.receiveCard(nineC);
-        instance.receiveCard(twoD);
-        instance.getHand().evaluateHand();
-        int actualPairDiscard = instance.chooseDiscard();
-        int expectedPairDiscard = 3;
-        assertEquals(actualPairDiscard, expectedPairDiscard);
-        assertFalse(instance.getHand().getContents()[0].equals(twoD));
-        assertFalse(instance.getHand().getContents()[1].equals(nineC));
-        assertFalse(instance.getHand().getContents()[2].equals(jackS)); //this first section is for a one pair hand
-        
-        instance.getHand().clearHand();
-        Card jackD = new CardImpl(Rank.JACK, Suit.DIAMONDS);
-        instance.receiveCard(jackD);
-        instance.receiveCard(aceH);
-        instance.receiveCard(aceS);
-        instance.receiveCard(jackS);
-        instance.receiveCard(twoD);
-        instance.getHand().evaluateHand();
-        int actualTwoPairDiscard = instance.chooseDiscard();
-        int expectedTwoPairDiscard = 1;
-        assertEquals(actualTwoPairDiscard, expectedTwoPairDiscard);
-        assertFalse(instance.getHand().getContents()[0].equals(twoD)); //this sections is for a two pair hand
-        
-        
-        instance.getHand().clearHand();
-        Card aceD = new CardImpl(Rank.ACE, Suit.DIAMONDS);
-        instance.receiveCard(aceD);
-        instance.receiveCard(aceH);
-        instance.receiveCard(aceS);
-        instance.receiveCard(jackS);
-        instance.receiveCard(twoD);
-        instance.getHand().evaluateHand();
-        int actualTripsDiscard = instance.chooseDiscard();
-        int expectedTripsDiscard = 2;
-        assertEquals(actualTripsDiscard, expectedTripsDiscard);
-        assertFalse(instance.getHand().getContents()[0].equals(twoD));
-        assertFalse(instance.getHand().getContents()[1].equals(jackS)); //this section is for a trips hand
-        
-        
-        
-        
-        
+    public void testChooseDiscardQuads() {  //Tests that no cards are discarded for four of a kind 
+       Player testPlayer = new DealerPlayer();
+       
+       for (int i = 0; i < 4; i++) { //Creates four cards of same rank
+    	   Card c = new CardImpl(Rank.ACE, Suit.values()[i]);
+    	   testPlayer.receiveCard(c);
+       }
+       Card twoD = new CardImpl(Rank.TWO, Suit.DIAMONDS); //Extra card
+       testPlayer.receiveCard(twoD);
+             
+       int output = testPlayer.chooseDiscard();
+       int expected = 0;
+       assertEquals(expected, output);
     }
+       
+    	
+    	
+//        Player instance = new DealerPlayer(); //no longer contain those cards
+//        Card aceH = new CardImpl(Rank.ACE, Suit.HEARTS);
+//        Card aceS = new CardImpl(Rank.ACE, Suit.SPADES);
+//        Card jackS = new CardImpl(Rank.JACK, Suit.SPADES);
+//        Card nineC = new CardImpl(Rank.NINE, Suit.CLUBS);
+//        Card twoD = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+//        instance.receiveCard(aceS);
+//        instance.receiveCard(aceH);
+//        instance.receiveCard(jackS);
+//        instance.receiveCard(nineC);
+//        instance.receiveCard(twoD);
+//        instance.getHand().evaluateHand();
+//        int actualPairDiscard = instance.chooseDiscard();
+//        int expectedPairDiscard = 3;
+//        assertEquals(actualPairDiscard, expectedPairDiscard);
+//        assertFalse(instance.getHand().getContents()[0].equals(twoD));
+//        assertFalse(instance.getHand().getContents()[1].equals(nineC));
+//        assertFalse(instance.getHand().getContents()[2].equals(jackS)); //this first section is for a one pair hand
+//        
+//        instance.getHand().clearHand();
+//        Card jackD = new CardImpl(Rank.JACK, Suit.DIAMONDS);
+//        instance.receiveCard(jackD);
+//        instance.receiveCard(aceH);
+//        instance.receiveCard(aceS);
+//        instance.receiveCard(jackS);
+//        instance.receiveCard(twoD);
+//        instance.getHand().evaluateHand();
+//        int actualTwoPairDiscard = instance.chooseDiscard();
+//        int expectedTwoPairDiscard = 1;
+//        assertEquals(actualTwoPairDiscard, expectedTwoPairDiscard);
+//        assertFalse(instance.getHand().getContents()[0].equals(twoD)); //this sections is for a two pair hand
+//        
+//        
+//        instance.getHand().clearHand();
+//        Card aceD = new CardImpl(Rank.ACE, Suit.DIAMONDS);
+//        instance.receiveCard(aceD);
+//        instance.receiveCard(aceH);
+//        instance.receiveCard(aceS);
+//        instance.receiveCard(jackS);
+//        instance.receiveCard(twoD);
+//        instance.getHand().evaluateHand();
+//        int actualTripsDiscard = instance.chooseDiscard();
+//        int expectedTripsDiscard = 2;
+//        assertEquals(actualTripsDiscard, expectedTripsDiscard);
+//        assertFalse(instance.getHand().getContents()[0].equals(twoD));
+//        assertFalse(instance.getHand().getContents()[1].equals(jackS)); //this section is for a trips hand
+//        
+        
+        
+        
+        
+    
 }
