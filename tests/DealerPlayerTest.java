@@ -29,17 +29,32 @@ public class DealerPlayerTest {
 		assertNotNull(outputName);
 	}
 	
+	@Test
+	public void testDealerPickerRandom() { //Test that the random number generated is between 0 and 9 (inclusive)
+		for (int i = 0; i < 1000; i++) { //Test plenty of times to be sure
+			int dealerRef = (int) (Math.random() * 10); //This is the exact code used in the method (not externally accessible)
+			assertTrue(dealerRef >= 0 && dealerRef < 10);
+			System.out.println(dealerRef);
+		}		
+	}
+	
+	@Test
+	public void testDealerPicker() { //Tests that dealerPicker assigns a name upon construction
+		Player testPlayer = new DealerPlayer();
+		String output = testPlayer.getName();
+		assertNotNull(output);
+	}
+	
 	/**
      * Test of receiveCard method, of class DealerPlayer.
      */
     @Test
     public void testReceiveCard() {
-        System.out.println("receiveCard");
-        Card c = null;
-        DealerPlayer instance = null;
-        instance.receiveCard(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    	Player testPlayer = new DealerPlayer();
+        Card c = new CardImpl(Rank.TWO, Suit.CLUBS);
+        testPlayer.receiveCard(c);
+        Card receivedCard = testPlayer.getHand().getContents()[0];
+        assertEquals(receivedCard, c); //Checks that the card was assigned to the hand via receiveCard()     
     }
 
     /**
