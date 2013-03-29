@@ -267,11 +267,11 @@ public class TableTopImpl implements TableTop {
                 int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();
                 if(humanDraw > compDraw) {
                     System.out.println("Congratulations! You have won the hand with the best high card.");
-                    break;
+                    return;
                 }
                 else if(compDraw < humanDraw) {
                     System.out.println("The computer has won the hand with the best high card! Better luck next time!");
-                    break;
+                    return;
                 }
                 if(i == 0 && compDraw == humanDraw) {
                     System.out.println("The hand is a draw! Please play again.");
@@ -280,10 +280,10 @@ public class TableTopImpl implements TableTop {
         }
         
         
-	public static void main(String[] args) {
-
-		TableTopImpl test = new TableTopImpl();
-		test.prepareTable();
-	}
+//	public static void main(String[] args) {
+//
+//		TableTopImpl test = new TableTopImpl();
+//		test.prepareTable();
+//	}
 	
 }
