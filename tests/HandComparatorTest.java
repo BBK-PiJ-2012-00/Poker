@@ -98,6 +98,39 @@ public class HandComparatorTest {
 		assertEquals(expected, output);
 	}
 	
+	/**
+	 * The following tests compare cases where both players have 'equal' hands (i.e. both have quads, trips, or pairs) 
+	 * and further comparison is needed.
+	 */
+	
+	@Test
+	public void testCompareHandsBothQuadsHumanPlayerWins() { //Tests that if both have quads, HumanPlayer wins with better hand
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.ACE, Suit.values()[i]); //Creates quads
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD);
+		
+		for (int i = 0; i < 4; i++) {
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]); //Creates quads
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Dealer has the better kicker but should still lose by having worse quads
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the higher quads!"; //HumanPlayer should win
+		assertEquals(expected, output);
+	}
+	
 	//Now to test for equal hands
+	//1. Both quads
+	//2. Both trips
+	//3. Both have a pair - first better pair vs weaker, then equal pairs and high cards must be compared
+	//3. Both have Two Pair
+	//4. Flush, Straight and High Card evaluated in next method
 
 }
