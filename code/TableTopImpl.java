@@ -107,7 +107,8 @@ public class TableTopImpl implements TableTop {
                 pause();
                 pause();
                 
-                compareHands(); //Compares the hands of both players
+                HandComparator handComparator = new HandComparatorImpl();
+                handComparator.compareHands(humanPlayer, dealerPlayer); //Compares the hands of both players
                 pause();
                 
                 String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
@@ -199,91 +200,91 @@ public class TableTopImpl implements TableTop {
         }
         
         
-        public void compareHands() {
-            int comparison = humanPlayer.getHand().compareTo(dealerPlayer.getHand()); //this section compares hands at showdown
-                if(comparison > 0) {                                                    //if this value is positive
-                    System.out.println("Congratulations! You have won the hand!");      //the first hand is higher in value
-                }
-                
-                else if(comparison < 0) {                                               // negative indicates a lower value
-                    System.out.println("The computer has won the hand! Better luck next time!");
-                }
-                
-                else if(comparison == 0) { //if the comparison or rank is equal, the hand needs to be compared further
-                    if(humanPlayer.getHand().getHandValueScore() == 7) { //represents quads by score
-                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
-                        System.out.println("Congratulations! You have won the hand with the higher quads!");
-                        }
-                        else {
-                        System.out.println("The computer has won the hand with the higher quads! Better luck next time!"); //there can only be 1 quad or trip hand of any value
-                        }                                                                           //and so the winner is clear
-                    }
-                    else if(humanPlayer.getHand().getHandValueScore() == 4){ //represents trips by score
-                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
-                        System.out.println("Congratulations! You have won the hand with the higher trips!");
-                        }
-                        else {
-                        System.out.println("The computer has won the hand with the higher trips! Better luck next time!"); //there can only be 1 quad or trip hand of any value
-                        }                          
-                    }
-                    else if(humanPlayer.getHand().getHandValueScore() == 2) { //represents one pair
-                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()){
-                            System.out.println("Congratulations! You have won the hand with the higher pair!");
-                        }
-                        else if(humanPlayer.getHand().getPairValue() < dealerPlayer.getHand().getPairValue()){
-                            System.out.println("The computer has won the hand with the higher pair! Better luck next time!");
-                        }
-                        else {
-                            standardHandComparison(); //equal one pair hands call this method to evaluate the rest of the cards to establish winner
-                        }
-                    }
-                    else if(humanPlayer.getHand().getHandValueScore() == 3) {  //same applies as above for 2 pair hands 
-                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()){
-                            System.out.println("Congratulations! You have won the hand with the higher of the two pair!");
-                        }
-                        else if(humanPlayer.getHand().getPairValue() < dealerPlayer.getHand().getPairValue()){
-                            System.out.println("The computer has won the hand with the higher of the two pair! Better luck next time!");
-                        }
-                        else if(humanPlayer.getHand().getLowerPairValue() > dealerPlayer.getHand().getLowerPairValue()) { //two pair hands also include this method
-                            System.out.println("Congratulations! You have won the hand with the higher second pair!");                                   //to compare the lower pair when higher pair is equal in rank
-                        }
-                        else if(humanPlayer.getHand().getLowerPairValue() < dealerPlayer.getHand().getLowerPairValue()){
-                            System.out.println("The computer has won the hand with the higher second pair! Better luck next time!");
-                        }
-                        else {
-                            standardHandComparison();
-                        }
-                    }
-                    else {
-                        standardHandComparison(); 
-                    }
-                }
-        }
+//        public void compareHands() {
+//            int comparison = humanPlayer.getHand().compareTo(dealerPlayer.getHand()); //this section compares hands at showdown
+//                if(comparison > 0) {                                                    //if this value is positive
+//                    System.out.println("Congratulations! You have won the hand!");      //the first hand is higher in value
+//                }
+//                
+//                else if(comparison < 0) {                                               // negative indicates a lower value
+//                    System.out.println("The computer has won the hand! Better luck next time!");
+//                }
+//                
+//                else if(comparison == 0) { //if the comparison or rank is equal, the hand needs to be compared further
+//                    if(humanPlayer.getHand().getHandValueScore() == 7) { //represents quads by score
+//                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
+//                        System.out.println("Congratulations! You have won the hand with the higher quads!");
+//                        }
+//                        else {
+//                        System.out.println("The computer has won the hand with the higher quads! Better luck next time!"); //there can only be 1 quad or trip hand of any value
+//                        }                                                                           //and so the winner is clear
+//                    }
+//                    else if(humanPlayer.getHand().getHandValueScore() == 4){ //represents trips by score
+//                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()) {
+//                        System.out.println("Congratulations! You have won the hand with the higher trips!");
+//                        }
+//                        else {
+//                        System.out.println("The computer has won the hand with the higher trips! Better luck next time!"); //there can only be 1 quad or trip hand of any value
+//                        }                          
+//                    }
+//                    else if(humanPlayer.getHand().getHandValueScore() == 2) { //represents one pair
+//                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()){
+//                            System.out.println("Congratulations! You have won the hand with the higher pair!");
+//                        }
+//                        else if(humanPlayer.getHand().getPairValue() < dealerPlayer.getHand().getPairValue()){
+//                            System.out.println("The computer has won the hand with the higher pair! Better luck next time!");
+//                        }
+//                        else {
+//                            standardHandComparison(); //equal one pair hands call this method to evaluate the rest of the cards to establish winner
+//                        }
+//                    }
+//                    else if(humanPlayer.getHand().getHandValueScore() == 3) {  //same applies as above for 2 pair hands 
+//                        if(humanPlayer.getHand().getPairValue() > dealerPlayer.getHand().getPairValue()){
+//                            System.out.println("Congratulations! You have won the hand with the higher of the two pair!");
+//                        }
+//                        else if(humanPlayer.getHand().getPairValue() < dealerPlayer.getHand().getPairValue()){
+//                            System.out.println("The computer has won the hand with the higher of the two pair! Better luck next time!");
+//                        }
+//                        else if(humanPlayer.getHand().getLowerPairValue() > dealerPlayer.getHand().getLowerPairValue()) { //two pair hands also include this method
+//                            System.out.println("Congratulations! You have won the hand with the higher second pair!");                                   //to compare the lower pair when higher pair is equal in rank
+//                        }
+//                        else if(humanPlayer.getHand().getLowerPairValue() < dealerPlayer.getHand().getLowerPairValue()){
+//                            System.out.println("The computer has won the hand with the higher second pair! Better luck next time!");
+//                        }
+//                        else {
+//                            standardHandComparison();
+//                        }
+//                    }
+//                    else {
+//                        standardHandComparison(); 
+//                    }
+//                }
+//        }
+//        
+//        
+//        public void standardHandComparison() {  //this method is for comparing hands that have equal rank value and cannot be distinguished by pair valuing.
+//            for(int i = 4; i >= 0 ; i--) {
+//                int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();
+//                int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();
+//                if(humanDraw > compDraw) {
+//                    System.out.println("Congratulations! You have won the hand with the best high card.");
+//                    return;
+//                }
+//                else if(compDraw < humanDraw) {
+//                    System.out.println("The computer has won the hand with the best high card! Better luck next time!");
+//                    return;
+//                }
+//                if(i == 0 && compDraw == humanDraw) {
+//                    System.out.println("The hand is a draw! Please play again.");
+//                }      
+//            }
+//        }
         
         
-        public void standardHandComparison() {  //this method is for comparing hands that have equal rank value and cannot be distinguished by pair valuing.
-            for(int i = 4; i >= 0 ; i--) {
-                int humanDraw = humanPlayer.getHand().getContents()[i].getRankValue();
-                int compDraw = dealerPlayer.getHand().getContents()[i].getRankValue();
-                if(humanDraw > compDraw) {
-                    System.out.println("Congratulations! You have won the hand with the best high card.");
-                    return;
-                }
-                else if(compDraw < humanDraw) {
-                    System.out.println("The computer has won the hand with the best high card! Better luck next time!");
-                    return;
-                }
-                if(i == 0 && compDraw == humanDraw) {
-                    System.out.println("The hand is a draw! Please play again.");
-                }      
-            }
-        }
-        
-        
-//	public static void main(String[] args) {
-//
-//		TableTopImpl test = new TableTopImpl();
-//		test.prepareTable();
-//	}
+	public static void main(String[] args) {
+
+		TableTopImpl test = new TableTopImpl();
+		test.prepareTable();
+	}
 	
 }

@@ -33,7 +33,7 @@ public interface HandComparator {
 	
 	/**
 	 * The other of the two methods that deal with comparing player hands.  If players have a Flush, Straight,
-	 * or High Card, this method is used to compare which player as the highest cards and determine a winner.
+	 * or High Card (i.e. 'nothing'), this method is used to compare which player as the highest cards and determine a winner.
 	 * This method is also used if players both have a pair or two pairs that are the same, so that hands may be
 	 * compared using the remaining cards.
 	 * 
