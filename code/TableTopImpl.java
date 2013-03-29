@@ -136,48 +136,49 @@ public class TableTopImpl implements TableTop {
         
         
         public void discardAndReplace() { //Allows user to exchange cards
-            String x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
-            if (x == null) {
-            	x = "0"; //Default value if user clicks cancel
-            }
-            
-            int cardsToBin = Integer.parseInt(x);
+        	 int cardsToBin;
+        	 
+             try {
+            	 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] "));
+             }
+             catch (NumberFormatException numEx) { //If user clicks cancel or enters rubbish, default is 0
+                 cardsToBin = 0;
+                 System.out.println("I'll assume from that you mean zero!");
+             }
+             while (cardsToBin > 3 || cardsToBin < 0) {
+                 System.out.println("You may only enter 0-3 cards to discard, please try again: ");
+                 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] "));
+             }
 
-            while (cardsToBin > 3 || cardsToBin < 0) {
-                System.out.println("You may only enter 0-3 cards to discard, please try again: ");
-                x = JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] ");
-                cardsToBin = Integer.parseInt(x);
-            }
-            
-            /**
-             * At this point whilst 'cardsToBin' is still positive, discardCard is called and passed the integer entered by the user. 
-             * The hand is not resorted during this process so that the numbers of the cards does not change during the discard.
-             */
-            int cardDis = 0;
-            int cardsToReplace = cardsToBin;
-            while(cardsToBin > 0) {                    
-                try {
-                	cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
-                }
-                catch (NumberFormatException numEx) { //If user clicks cancel, default is 0
-                	cardDis = 0;
-                	break;
-                }
-                if(cardDis > 0 && cardDis < 6) {
-                    humanPlayer.getHand().discardCard(cardDis);
-                    cardsToBin--;
-                }
-                else {
-                    System.out.println("You may only enter 1,2,3,4 or 5");
-                }
-            }
-            
-	        for (int i = cardsToReplace; i > 0;i--) {
-	                humanPlayer.receiveCard(deck.popCard());
-	        }
-                if (cardDis > 0) { //Only print message below if user has opted to swap out cards
-                	System.out.println("dealing your replacement cards......");
-                }
+             /**
+              * At this point whilst 'cardsToBin' is still positive, discardCard is called and passed the integer entered by the user. 
+              * The hand is not resorted during this process so that the numbers of the cards does not change during the discard.
+              */
+             int cardDis = 0;
+             int cardsToReplace = cardsToBin;
+             while(cardsToBin > 0) {                    
+                 try {
+                         cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
+                 }
+                 catch (NumberFormatException numEx) { //If user clicks cancel or enters rubbish, default is 0
+                         cardDis = 0;
+                         break;
+                 }
+                 if (cardDis > 0 && cardDis < 6) {
+                     humanPlayer.getHand().discardCard(cardDis);
+                     cardsToBin--;
+                 }
+                 else {
+                     System.out.println("You may only enter 1,2,3,4 or 5");
+                 }
+             }
+
+             for (int i = cardsToReplace; i > 0;i--) {
+                     humanPlayer.receiveCard(deck.popCard());
+             }
+             if (cardDis > 0) { //Only print message below if user has opted to swap out cards
+                     System.out.println("dealing your replacement cards......");
+             }
         }
         
         
