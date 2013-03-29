@@ -182,15 +182,40 @@ public class HandComparatorTest {
 		
 		humanPlayer.getHand().evaluateHand();
 		dealerPlayer.getHand().evaluateHand();
-		testComparator.highCardComparison(humanPlayer, dealerPlayer);
+		testComparator.compareHands(humanPlayer, dealerPlayer); //Testing this time that compareHands() calls highCardComparison()
 		
 		String output = testComparator.getResult();
 		String expected = "Congratulations! You have won the hand with the best high card.";
 		assertEquals(output, expected);
 	}
 	
+	@Test
+	public void testHighCardComparisonDraw() { //Tests that player with highest card wins in absence of better hand
+		humanPlayer.receiveCard(kingH); 
+		humanPlayer.receiveCard(queenD);
+		humanPlayer.receiveCard(fiveD);
+		humanPlayer.receiveCard(fourH);
+		humanPlayer.receiveCard(twoD); //HumanPlayer should win based on this card (higher than twoC)
+		
+		dealerPlayer.receiveCard(kingC); // All higher cards are same rank
+		dealerPlayer.receiveCard(queenS); 
+		dealerPlayer.receiveCard(fiveH);
+		dealerPlayer.receiveCard(fourC);
+		dealerPlayer.receiveCard(twoC);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "The hand is a draw! Please play again.";
+		assertEquals(output, expected);
+	}
 	
-	//Test HC is reached when going through compareHands(), as it will do normally
+	@Test
+	public void testHighCardAccessViaCompareHands() { 
+		
+	}
 	
 	/**
 	 * The following tests compare cases where both players have 'equal' hands (i.e. both have quads, trips, or pairs) 
@@ -405,11 +430,212 @@ public class HandComparatorTest {
 		assertEquals(expected, output);
 	}
 	
+	@Test
+	public void testBothTwoPairHumanPlayerWins() { //Tests that HumanPlayer is winner with better Two Pair
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.SIX, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.FOUR, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
 	
-	//3. Both have a pair - first better pair vs weaker, then equal pairs and high cards must be compared
-	//3. Both have Two Pair - high ranking different, then high ranking equal to compare on low pair, then all the same for HC
-	//4. Flush, Straight and High Card evaluated in next method
-	//4. Test high cards of same rank going down to the bottom
-	//5. Test for a draw
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the higher of the two pair!";
+		assertEquals(expected, output);		
+	}
+	
+	
+	@Test
+	public void testBothTwoPairDealerPlayerWins() { //Tests that DealerPlayer is winner with better Two Pair
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.NINE, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.THREE, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.QUEEN, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand with the higher of the two pair! Better luck next time!";
+		assertEquals(expected, output);		
+	}
+	
+	/**
+	 * Tests that the HumanPlayer can win if both players have their higher pair of the same rank,
+	 * but the HumanPlayer has a better lower ranking pair than the DealerPlayer.
+	 */
+	@Test
+	public void testBothTwoPairHumanPlayerWinsLowerPair() {
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		for (int i = 2; i < 4; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.FOUR, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the higher second pair!";
+		assertEquals(expected, output);		
+	}
+	
+	/**
+	 * Tests that the DealerPlayer can win if both players have their higher pair of the same rank,
+	 * but the DealerPlayer has a better lower ranking pair than the HumanPlayer.
+	 */
+	@Test
+	public void testBothTwoPairDealerPlayerWinsLowerPair() {
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		for (int i = 2; i < 4; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.SEVEN, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand with the higher second pair! Better luck next time!";
+		assertEquals(expected, output);		
+	}
+	
+	/**
+	 * Tests that the DealerPlayer can win if both players have an equal Two Pair using
+	 * a better high card.
+	 */
+	@Test
+	public void testBothTwoPairDealerPlayerWinsHighCard() {
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(twoD); //Kicker
+		
+		for (int i = 2; i < 4; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 2; i < 4; i++) {
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingC); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand with the best high card! Better luck next time!";
+		assertEquals(expected, output);		
+	}
+	
+	/**
+	 * Tests that the HumanPlayer can win if both players have an equal Two Pair using
+	 * a better high card.
+	 */
+	@Test
+	public void testBothTwoPairHumanPlayerWinsHighCard() {
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		for (int i = 0; i < 2; i++) {
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]); //Creats another pair for Two Pair
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(queenS); //Kicker
+		
+		for (int i = 2; i < 4; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.JACK, Suit.values()[i]);
+			dealerPlayer.receiveCard(c);
+		}
+		for (int i = 2; i < 4; i++) {
+			Card c = new CardImpl(Rank.FIVE, Suit.values()[i]); //Creates another pair for Two Pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(fourH); //Kicker
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the best high card.";
+		assertEquals(expected, output);		
+	}
+	
+	/**
+	 * There is no need to test both players having a Flush or Straight, as these are compared exactly the same
+	 * way as high card hands (which have already been tested).
+	 */
 
 }
