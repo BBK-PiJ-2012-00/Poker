@@ -53,7 +53,7 @@ public class DealerPlayerTest {
     	Player testPlayer = new DealerPlayer();
         Card c = new CardImpl(Rank.TWO, Suit.CLUBS);
         testPlayer.receiveCard(c);
-        Card receivedCard = testPlayer.getHand().getContents()[0];
+        Card receivedCard = testPlayer.getHand().getContents()[0]; //Accesses the player's hand (the first card of it)
         assertEquals(receivedCard, c); //Checks that the card was assigned to the hand via receiveCard()     
     }
 
@@ -62,13 +62,9 @@ public class DealerPlayerTest {
      */
     @Test
     public void testGetHand() {
-        System.out.println("getHand");
-        DealerPlayer instance = null;
-        Hand expResult = null;
-        Hand result = instance.getHand();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player testPlayer = new DealerPlayer();
+        Hand output = testPlayer.getHand();
+        assertTrue(output instanceof Hand);
     }
 
     /**
