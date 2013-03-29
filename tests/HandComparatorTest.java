@@ -29,9 +29,12 @@ public class HandComparatorTest {
 	
 	//Extra cards
 	private Card twoD;
+	private Card twoC;
 	private Card eightS;
 	private Card kingC;
+	private Card kingH;
 	private Card queenD;
+	private Card queenS;
 	private Card threeH;
 	private Card fiveH;
 	
@@ -42,10 +45,13 @@ public class HandComparatorTest {
 		dealerPlayer = new DealerPlayer();
 		
 		twoD = new CardImpl(Rank.TWO, Suit.DIAMONDS);
+		twoC = new CardImpl(Rank.TWO, Suit.CLUBS);
+		threeH = new CardImpl(Rank.THREE, Suit.HEARTS);
 		eightS = new CardImpl(Rank.EIGHT, Suit.SPADES);
 		kingC = new CardImpl(Rank.KING, Suit.CLUBS);
+		kingH = new CardImpl(Rank.KING, Suit.HEARTS);
 		queenD = new CardImpl(Rank.QUEEN, Suit.DIAMONDS);
-		threeH = new CardImpl(Rank.THREE, Suit.HEARTS);
+		queenS = new CardImpl(Rank.QUEEN, Suit.SPADES);		
 		fiveH = new CardImpl(Rank.FIVE, Suit.HEARTS);
 	}
 
@@ -208,7 +214,7 @@ public class HandComparatorTest {
 	}
 	
 	@Test
-	public void testCompareHandsBothOnePairHumanPlayerWins() { //Tests that if both have a pair, HumanPlayer can win with better hand
+	public void testBothOnePairHumanPlayerWins() { //Tests that if both have a pair, HumanPlayer can win with better hand
 		for (int i = 0; i < 2; i++) { //Creates a pair
 			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
 			humanPlayer.receiveCard(c);
@@ -236,7 +242,7 @@ public class HandComparatorTest {
 	
 	
 	@Test
-	public void testCompareHandsBothOnePairDealerPlayerWins() { //Tests that if both have a pair, DealerPlayer can win with better hand
+	public void testBothOnePairDealerPlayerWins() { //Tests that if both have a pair, DealerPlayer can win with better hand
 		for (int i = 0; i < 2; i++) { //Creates a pair
 			Card c = new CardImpl(Rank.SIX, Suit.values()[i]);
 			humanPlayer.receiveCard(c);
@@ -263,9 +269,65 @@ public class HandComparatorTest {
 	}
 	
 	
-	//2. Both trips
+	@Test
+	public void testEqualPairHumanPlayerWins() { //If both have an equal pair, HumanPlayer should win with better high card
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(kingC); //This card should enable HumanPlayer to win
+		humanPlayer.receiveCard(eightS);
+		humanPlayer.receiveCard(threeH);
+		
+		for (int i = 2; i < 4; i++) {
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]); //Creates a pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(twoD); 
+		dealerPlayer.receiveCard(queenD);
+		dealerPlayer.receiveCard(fiveH);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+		
+		String output = testComparator.getResult();
+		String expected = "Congratulations! You have won the hand with the best high card."; //HumanPlayer should win
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testEqualPairDealerToWin() { //If both have an equal pair, DealerPlayer should win with better high card
+		for (int i = 0; i < 2; i++) { //Creates a pair
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]);
+			humanPlayer.receiveCard(c);
+		}
+		humanPlayer.receiveCard(kingC); 
+		humanPlayer.receiveCard(eightS);
+		humanPlayer.receiveCard(threeH);
+		
+		for (int i = 2; i < 4; i++) {
+			Card c = new CardImpl(Rank.TEN, Suit.values()[i]); //Creates a pair
+			dealerPlayer.receiveCard(c);
+		}
+		dealerPlayer.receiveCard(kingH);
+		dealerPlayer.receiveCard(queenD); //This card should enable DealerPlayer to win, as it beats eightS
+		dealerPlayer.receiveCard(fiveH);
+		
+		humanPlayer.getHand().evaluateHand();
+		dealerPlayer.getHand().evaluateHand();
+		testComparator.compareHands(humanPlayer, dealerPlayer);
+	
+		String output = testComparator.getResult();
+		String expected = "The computer has won the hand with the best high card! Better luck next time!"; //DealerPlayer should win
+		assertEquals(expected, output);
+	}
+	
+	
 	//3. Both have a pair - first better pair vs weaker, then equal pairs and high cards must be compared
 	//3. Both have Two Pair - high ranking different, then high ranking equal to compare on low pair, then all the same for HC
 	//4. Flush, Straight and High Card evaluated in next method
+	//4. Test high cards of same rank going down to the bottom
+	//5. Test for a draw
 
 }
