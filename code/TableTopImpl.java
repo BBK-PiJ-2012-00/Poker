@@ -139,15 +139,22 @@ public class TableTopImpl implements TableTop {
         	 int cardsToBin;
         	 
              try {
-            	 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] "));
-             }
-             catch (NumberFormatException numEx) { //If user clicks cancel or enters rubbish, default is 0
+            	 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Minimum 0][Maximum 3][Non-numerical input skips discard stage] "));
+             } //This section will assume zero cards are to be changed is a non-numerical input is entered. Otherwise it will move on.
+             catch (NumberFormatException numEx) { //If user clicks cancel, default is 0
                  cardsToBin = 0;
                  System.out.println("I'll assume from that you mean zero!");
              }
+             
              while (cardsToBin > 3 || cardsToBin < 0) {
-                 System.out.println("You may only enter 0-3 cards to discard, please try again: ");
-                 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] "));
+                 try{
+	                 System.out.println("You may only enter 0-3 cards to discard, please try again: ");
+	                 cardsToBin = Integer.parseInt(JOptionPane.showInputDialog("How many cards would you like to discard? [Maximum 3] "));
+                 }
+                 catch (NumberFormatException numEx) { //If user clicks cancel, default is 0
+                         cardsToBin = 0;
+                         System.out.println("I'll assume from that you mean zero!");                     
+                 }
              }
 
              /**
@@ -156,15 +163,17 @@ public class TableTopImpl implements TableTop {
               */
              int cardDis = 0;
              int cardsToReplace = cardsToBin;
+             
              while(cardsToBin > 0) {                    
                  try {
                          cardDis = Integer.parseInt(JOptionPane.showInputDialog("Which card would you like to discard next? [Enter 1,2,3,4 or 5]"));
                  }
-                 catch (NumberFormatException numEx) { //If user clicks cancel or enters rubbish, default is 0
-                         cardDis = 0;
-                         break;
+                 //If user clicks cancel (throws exception) they must try again as they have previously chosen a number of cards to discard
+                 catch (NumberFormatException numEx) { 
+                         cardDis = 9; //This default is used to prompt re-entry of card selection below
                  }
-                 if (cardDis > 0 && cardDis < 6) {
+                 
+                 if(cardDis > 0 && cardDis < 6) {
                      humanPlayer.getHand().discardCard(cardDis);
                      cardsToBin--;
                  }
