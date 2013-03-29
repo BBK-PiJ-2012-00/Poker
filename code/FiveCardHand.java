@@ -25,7 +25,6 @@ public class FiveCardHand implements Hand {
 	private static final int SIZE = 5;
 	private Card[] handContents = new CardImpl[SIZE];
 	
-	
 	@Override
 	public Card[] getContents() {
 		return handContents;
@@ -34,17 +33,12 @@ public class FiveCardHand implements Hand {
 	
 	@Override
 	public void addCard(Card c) {
-		try {
-			for(int i = 0; i < 5; i++) {
-                if(handContents[i] == null){
-                    handContents[i] = c;
-                    break;
-                }
-			}
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("(!) Attempting to add more cards to a hand than is allowed.");
-		}		
+		for(int i = 0; i < SIZE; i++) {
+            if(handContents[i] == null){
+                handContents[i] = c;
+                break;
+            }
+		}	
 	}
 
 
