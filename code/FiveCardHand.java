@@ -57,7 +57,7 @@ public class FiveCardHand implements Hand {
 
 	
 	@Override
-	public void evaluateHand() { //Should perhaps return a String so that this can be called directly
+	public void evaluateHand() { 
 		//First sort the hand; this makes it easier to evaluate
 		this.sort();
 		
