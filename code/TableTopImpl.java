@@ -120,10 +120,10 @@ public class TableTopImpl implements TableTop {
                 }
                 if (cont.equals("N")|| cont.equals("n")) {
                     finished = true;
-                    System.out.append("Thanks for playing!");
+                    System.out.println("Thanks for playing!");
                 }
                 else if (cont.equals("Y") || cont.equals("y")) { //If the user enters something other than Y or N
-                	System.out.append("   Starting the next round!   ");
+                	System.out.println("Starting the next round!");
                 }              
                else {
                 	System.out.println("I'll take that as a yes, then!");
