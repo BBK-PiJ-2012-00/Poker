@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import code.Deck;
 import code.DeckImpl;
@@ -17,9 +19,20 @@ import code.Suit;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class DeckTest {
+	private Deck testDeck;
+	
+	@Before
+	public void setUp() {
+		testDeck = new DeckImpl();
+	}
+	
+	@After
+	public void tearDown() {
+		testDeck = null;
+	}
 
 	@Test
 	public void testCreateCards() { //Checks that 52 cards are created
@@ -132,12 +145,11 @@ public class DeckTest {
 		}
 		
 		for (int z = 0; z < 100; z++) { //Make 100 comparisons of array pairs
-			//System.out.println("Test round: " + z);
 			for (int j = 0; j < 52; j++) { //Compare the two String array representations of the shuffled deck
-			//	System.out.println("Position reached: " + j);
 				assertFalse(firstShuffleResult[j].equals(secondShuffleResult[j]));
-			}//This test will not fail every time; some cards may
-			//hold equal positions, and so the test may fail sometimes and not others.  This doesn't mean
+			}
+			//This test will not pass every time; some cards may hold equal positions 
+			//in the two decks, and so the test may fail sometimes and not others.  This doesn't mean
 			//the deck isn't 'well shuffled', however. It fails as soon as it hits two identical cards in the same
 			//array position.
 			//Thus, this is really a test to show that each shuffle of the deck produces a 'sufficiently different'
@@ -152,7 +164,7 @@ public class DeckTest {
 	public void testPopCard() {
 		Deck testDeck = new DeckImpl();
 		Card c = testDeck.popCard();
-		Card expectedCard = new CardImpl(Rank.ACE, Suit.CLUBS);//First card in a new deck is ace of clubs
+		Card expectedCard = new CardImpl(Rank.TWO, Suit.CLUBS);//First card in a new deck is ace of clubs
 		assertTrue(expectedCard.toString().equals(c.toString()));//Assert that both cards are of the same suit and rank
 	}
 	
@@ -161,7 +173,7 @@ public class DeckTest {
 		Deck testDeck = new DeckImpl();
 		testDeck.popCard();
 		Card topCard = testDeck.getContents().get(0);
-		Card expectedCard = new CardImpl(Rank.TWO, Suit.CLUBS);
+		Card expectedCard = new CardImpl(Rank.THREE, Suit.CLUBS);
 		assertTrue(expectedCard.toString().equals(topCard.toString()));
 	}
 	
