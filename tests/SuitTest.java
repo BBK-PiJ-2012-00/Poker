@@ -11,7 +11,7 @@ import code.Suit;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class SuitTest {
 
@@ -23,7 +23,7 @@ public class SuitTest {
 	}
 	
 	@Test 
-	public void equalityAmongSuits() {
+	public void equalityAmongSuits() { //Tests that the same suit shows up as being equal
 		Suit diamond1 = Suit.DIAMONDS;
 		Suit diamond2 = Suit.DIAMONDS;
 		boolean testEquality = false;

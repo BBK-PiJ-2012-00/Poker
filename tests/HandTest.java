@@ -20,7 +20,7 @@ import code.Suit;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class HandTest {
 	private Hand testHand;

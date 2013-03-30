@@ -15,7 +15,7 @@ import code.Rank;
 
 /**
  * @author Anna Taylor
- *
+ * @author Greg Marshall
  */
 public class CardTest {
 	
