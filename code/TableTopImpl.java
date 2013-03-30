@@ -19,7 +19,7 @@ public class TableTopImpl implements TableTop {
 	public void prepareTable() { // creates human and dealer players and takes user's name, and sets off the game
 
 		String userName = JOptionPane.showInputDialog("Please enter your name: ");
-		if (userName == null) { //In the event that the user clicks 'cancel'
+		if (userName == null || userName.length() < 1) { //In the event that the user clicks 'cancel' or leaves the box blank
 			userName = "Player";
 		}
 		humanPlayer = new HumanPlayer(userName);
