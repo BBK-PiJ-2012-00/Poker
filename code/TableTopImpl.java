@@ -112,17 +112,22 @@ public class TableTopImpl implements TableTop {
                 System.out.println(handComparator.getResult()); //Prints the result of the comparison (announces winner)
                 pause();
                 
+                System.out.println(); //Separates the two game rounds
+                
                 String cont = JOptionPane.showInputDialog("Would you like to play another hand? Enter Y to continue or N to exit: ");
                 if (cont == null) {
                 	cont = "N"; //N is assumed if the user clicks cancel
                 }
-                if (cont.contains("N")|| cont.equals("n")) {
+                if (cont.equals("N")|| cont.equals("n")) {
                     finished = true;
                     System.out.append("Thanks for playing!");
                 }
-                else if (!cont.contains("Y") || !cont.contains("y")) { //If the user enters something other than Y or N
-                	System.out.append("   I'll take that as a yes, then!   ");
-                }
+                else if (cont.equals("Y") || cont.equals("y")) { //If the user enters something other than Y or N
+                	System.out.append("   Starting the next round!   ");
+                }              
+               else {
+                	System.out.println("I'll take that as a yes, then!");
+               }
             }
         }
         
